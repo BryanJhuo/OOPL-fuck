@@ -29,7 +29,12 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	
+	if (IsRightButtonDown && !IsRightButtonUp)
+		character.SetTopLeft(character.GetLeft() + 5, character.GetTop());
+	if (IsLeftButtonDown && !IsLeftButtonUp)
+		character.SetTopLeft(character.GetLeft() - 5, character.GetTop());
+	if (IsUpButtonDown && !IsUpButtonUp)
+		character.SetTopLeft(character.GetLeft(), character.GetTop() - 5);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -110,19 +115,52 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	map_pole[0].LoadBitmapByString({ "Resources/object/pole_M1_yellow_1.bmp", "Resources/object/pole_M1_yellow_2.bmp" });
 	map_pole[1].LoadBitmapByString({"Resources/object/pole_M1_purple_1.bmp", "Resources/object/pole_M1_purple_2.bmp" });
 	
-	
+	character.LoadBitmapByString({ "Resources/characters/fireman_front_1.bmp" });
+	character.SetTopLeft(50, 905);
 	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
-{
-	
+{	
+	switch (nChar)
+	{
+	case VK_RIGHT :
+		IsRightButtonDown = true;
+		break;
+	case VK_LEFT:
+		IsLeftButtonDown = true;
+		break;
+	case VK_UP:
+		IsUpButtonDown = true;
+		break;
+	default:
+		IsRightButtonDown = false;
+		IsLeftButtonDown = false;
+		IsUpButtonDown = false;
+		break;
+	}
 	
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	switch (nChar)
+	{
+	case VK_RIGHT:
+		IsRightButtonUp = true;
+		break;
+	case VK_LEFT:
+		IsLeftButtonUp = true;
+		break;
+	case VK_UP:
+		IsUpButtonUp = true;
+		break;
+	default:
+		IsRightButtonUp = false;
+		IsLeftButtonUp = false;
+		IsUpButtonUp = false;
+		break;
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -208,6 +246,7 @@ void CGameStateRun::show_page() {
 		map_door[0].ShowBitmap();
 		map_door[1].SetTopLeft(1240, 120);
 		map_door[1].ShowBitmap();
+		character.ShowBitmap();
 	}
 }
 

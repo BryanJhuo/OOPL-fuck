@@ -38,6 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
+#include "../Game/myCharacter.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@ namespace game_framework {
 	// 每個Member function的Implementation都要弄懂
 	/////////////////////////////////////////////////////////////////////////////
 
-	class CGameStateRun : public CGameState {
+	class CGameStateRun : public CGameState, Character{
 	public:
 		CGameStateRun(CGame *g);
 		~CGameStateRun();
@@ -107,6 +108,14 @@ namespace game_framework {
 		CMovingBitmap map_diamond[3];	//red blue white
 		CMovingBitmap map_door[2];	//fire water
 		CMovingBitmap map_pole[3];	//M1_purple,yellow
+
+		CMovingBitmap character;
+		bool IsRightButtonUp = false;
+		bool IsRightButtonDown = false;
+		bool IsLeftButtonUp = false;
+		bool IsLeftButtonDown = false;
+		bool IsUpButtonUp = false;
+		bool IsUpButtonDown = false;
 
 	};
 
