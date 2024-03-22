@@ -10,7 +10,10 @@
 url : https://i-gamer.net/site/16086.html
 
 Virtual Key Code
-url : https://learn.microsoft.com/zh-tw/windows/win32/inputdev/virtual-key-codes
+url : https://learn.microsoft.com/zh-tw/windows/win32/inputdev/virtual-key-codes  
+
+Library:  
+url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework  
 
 ## 每周進度
 |  週數   |  成員1 Eva  |   Done   | 成員2 Bryan|Done|

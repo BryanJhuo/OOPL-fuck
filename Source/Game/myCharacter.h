@@ -14,10 +14,9 @@ public:
 	virtual void IsButtonDown(UINT) = 0;
 	void moveRight();
 	void moveLeft();
-	void moveRightJumpUp();
-	void moveRightJumpDown();
-	void moveLeftJumpUp();
-	void moveLeftJumpDown();
+	void moveJumpUp();
+	void moveJumpDown();
+
 };
 
 #endif // !"myCharacter.h"
