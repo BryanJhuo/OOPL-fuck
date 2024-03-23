@@ -245,11 +245,21 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Game\fireman.cpp" />
+    <ClCompile Include="Source\Game\mapBox.cpp" />
+    <ClCompile Include="Source\Game\mapButton.cpp" />
+    <ClCompile Include="Source\Game\mapController.cpp" />
+    <ClCompile Include="Source\Game\mapDiamond.cpp" />
+    <ClCompile Include="Source\Game\mapDoor.cpp" />
+    <ClCompile Include="Source\Game\mapPole.cpp" />
+    <ClCompile Include="Source\Game\mapPool.cpp" />
+    <ClCompile Include="Source\Game\myButton.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
     <ClCompile Include="Source\Game\mygame_over.cpp" />
     <ClCompile Include="Source\Game\mygame_run.cpp" />
     <ClCompile Include="Source\Game\myCharacter.cpp" />
     <ClCompile Include="Source\Game\myMap.cpp" />
+    <ClCompile Include="Source\Game\myScene.cpp" />
+    <ClCompile Include="Source\Game\myObject.cpp" />
     <ClCompile Include="Source\Game\watergirl.cpp" />
     <ClCompile Include="Source\Library\audio.cpp" />
     <ClCompile Include="Source\Library\gamecore.cpp" />
@@ -264,9 +274,19 @@
     <ClInclude Include="Source\Core\StdAfx.h" />
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\fireman.h" />
+    <ClInclude Include="Source\Game\mapBox.h" />
+    <ClInclude Include="Source\Game\mapButton.h" />
+    <ClInclude Include="Source\Game\mapController.h" />
+    <ClInclude Include="Source\Game\mapDiamond.h" />
+    <ClInclude Include="Source\Game\mapDoor.h" />
+    <ClInclude Include="Source\Game\mapPole.h" />
+    <ClInclude Include="Source\Game\mapPool.h" />
+    <ClInclude Include="Source\Game\myButton.h" />
     <ClInclude Include="Source\Game\myCharacter.h" />
     <ClInclude Include="Source\Game\mygame.h" />
     <ClInclude Include="Source\Game\myMap.h" />
+    <ClInclude Include="Source\Game\myObject.h" />
+    <ClInclude Include="Source\Game\myScene.h" />
     <ClInclude Include="Source\Game\watergirl.h" />
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
