@@ -6,28 +6,13 @@ void Fireman::IsMoving(){
 		this->moveRight();
 	if (this->IsLeftButtonClick)
 		this->moveLeft();
-	if (this->IsUpButtonClick && this->IsRightButtonClick) {
-		if (this->jumpHeight <= 3) {
-			this->moveRightJumpUp();
-			this->jumpHeight++;
-		}
-		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
-			this->moveRightJumpDown();
-			this->jumpHeight++;
-		}
-		Sleep(25);
+	if (this->IsUpButtonClick) {
+		if (this->IsTimesUp())
+			this->IsUpButtonClick = false;
+		else
+			this->moveJumpUp();
 	}
-	if (this->IsUpButtonClick && this->IsLeftButtonClick) {
-		if (this->jumpHeight <= 3) {
-			this->moveLeftJumpUp();
-			this->jumpHeight++;
-		}
-		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
-			this->moveLeftJumpDown();
-			this->jumpHeight++;
-		}
-		Sleep(25);
-	}
+	this->IsDropDown();
 }
 
 void Fireman::IsButtonDown(UINT nChar) {
@@ -41,6 +26,7 @@ void Fireman::IsButtonDown(UINT nChar) {
 		break;
 	case VK_UP:
 		this->IsUpButtonClick = true;
+		this->start = clock_type::now();
 		break;
 	}
 }
@@ -55,8 +41,22 @@ void Fireman::IsButtonUp(UINT nChar) {
 		this->IsLeftButtonClick = false;
 		break;
 	case VK_UP:
-		this->IsUpButtonClick = false;
-		this->jumpHeight = 0;
+		if (!this->IsTimesUp()) {
+			this->IsUpButtonClick = false;
+			this->IsDropDown();
+		}
 		break;
 	}
+}
+
+bool Fireman::IsTimesUp() {
+	if (std::chrono::duration_cast<time_type>(clock_type::now() - start).count() < 400)
+		return false;
+	else
+		return true;
+}
+
+void Fireman::IsDropDown() {
+	if (this->character.GetTop() + this->character.GetHeight() < 975 && !this->IsUpButtonClick)
+		this->moveJumpDown();
 }
