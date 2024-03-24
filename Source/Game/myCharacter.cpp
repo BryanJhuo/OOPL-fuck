@@ -9,15 +9,51 @@ void Character::moveLeft(){
 	character.SetTopLeft(character.GetLeft() - 5, character.GetTop());
 }
 
-void Character::moveJumpUp() {
-	character.SetTopLeft(character.GetLeft(), character.GetTop() - 5);
+void Character::moveRightJumpUp() {
+	character.SetTopLeft(character.GetLeft() + 5, character.GetTop() - 14);
 }
 
-void Character::moveJumpDown() {
-	character.SetTopLeft(character.GetLeft() , character.GetTop() + 7);
+void Character::moveRightJumpDown() {
+	character.SetTopLeft(character.GetLeft() + 5, character.GetTop() + 14);
 }
 
-void Character::IsMoving() {}
+void Character::moveLeftJumpUp() {
+	character.SetTopLeft(character.GetLeft() - 5, character.GetTop() - 14);
+}
+
+void Character::moveLeftJumpDown() {
+	character.SetTopLeft(character.GetLeft() - 5, character.GetTop() + 14);
+}
+
+void Character::IsMoving() {
+	/*
+	if (this->IsRightButtonClick)
+		this->moveRight();
+	if (this->IsLeftButtonClick)
+		this->moveLeft();
+	if (this->IsUpButtonClick && this->IsRightButtonClick) {
+		if (this->jumpHeight <= 3) {
+			this->moveRightJumpUp();
+			this->jumpHeight++;
+		}
+		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
+			this->moveRightJumpDown();
+			this->jumpHeight++;
+		}
+		Sleep(25);
+	}
+	if (this->IsUpButtonClick && this->IsLeftButtonClick) {
+		if (this->jumpHeight <= 3) {
+			this->moveLeftJumpUp();
+			this->jumpHeight++;
+		}
+		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
+			this->moveLeftJumpDown();
+			this->jumpHeight++;
+		}
+		Sleep(25);
+	}*/
+}
 
 void Character::IsButtonUp(UINT nChar) {}
 

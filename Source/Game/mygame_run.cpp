@@ -36,13 +36,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	background.LoadBitmapByString({
-		"Resources/home_page/background.bmp",
-		"Resources/menu/background.bmp",
-		"Resources/map/map1.bmp",
-		"Resources/map/block1.bmp"
-		});
-	background.SetTopLeft(0, 0);
+	/*
+	background[3]: home, menu, map
+	window[4]: setting, paused, die, pass
+	*/
+	scene.loadScene();
 
 	/*
 	home: (0)play  (1)setting
@@ -54,70 +52,22 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	die: (11)menu (12)retry (13)skip 
 	pass: (14)continue
 	*/
-	button[0].LoadBitmapByString({ "Resources/home_page/button_play.bmp" }); 
-	button[0].SetTopLeft(553, 530);
-	button[1].LoadBitmapByString({ "Resources/home_page/button_setting.bmp" });
-	button[1].SetTopLeft(100, 890);
-	button[2].LoadBitmapByString({ "Resources/menu/stage_gray.bmp", "Resources/menu/stage_green.bmp", "Resources/menu/stage_orange.bmp", "Resources/menu/stage_purple.bmp" });
-	button[2].SetTopLeft(0, 0);
-	button[3].LoadBitmapByString({ "Resources/menu/button_back.bmp" });
-	button[3].SetTopLeft(30, 830);
-	button[4].LoadBitmapByString({ "Resources/map/button_paused.bmp" }, RGB(0, 255, 0));
-	button[4].SetTopLeft(1320, 10);
-	button[5].LoadBitmapByString({ "Resources/window/setting/button_music_1.bmp", "Resources/window/setting/button_music_2.bmp" });
-	button[5].SetTopLeft(0, 0);
-	button[6].LoadBitmapByString({ "Resources/window/setting/button_effec_1.bmp", "Resources/window/setting/button_effec_2.bmp" });
-	button[6].SetTopLeft(0, 0);
-	button[7].LoadBitmapByString({ "Resources/window/setting/button_back.bmp" });
-	button[7].SetTopLeft(90, 800);
-	button[8].LoadBitmapByString({ "Resources/window/paused/button_end.bmp" });	//跟button7的差異在一個回home 一個map
-	button[8].SetTopLeft(0, 0);
-	button[9].LoadBitmapByString({ "Resources/window/paused/button_resume.bmp" });
-	button[9].SetTopLeft(0, 0);
-	button[10].LoadBitmapByString({ "Resources/window/paused/button_retry.bmp" });
-	button[10].SetTopLeft(0, 0);
-	button[11].LoadBitmapByString({ "Resources/window/die/button_menu.bmp" });
-	button[11].SetTopLeft(0, 0);
-	button[12].LoadBitmapByString({ "Resources/window/die/button_retry.bmp" });
-	button[12].SetTopLeft(0, 0);
-	button[13].LoadBitmapByString({ "Resources/window/die/button_skip.bmp" });
-	button[13].SetTopLeft(0, 0);
-	button[14].LoadBitmapByString({ "Resources/window/pass/button_continue.bmp" });
-	button[14].SetTopLeft(0, 0);
-
-	//window(setting paused die pass) select
-	window[0].LoadBitmapByString({ "Resources/window/setting/background.bmp" });
-	window[1].LoadBitmapByString({ "Resources/window/paused/background.bmp" });
-	window[2].LoadBitmapByString({ "Resources/window/die/background.bmp" });
-	window[3].LoadBitmapByString({ "Resources/window/pass/background.bmp" });
-	for (int i = 0; i < 4; i++) {
-		window[i].SetTopLeft(80, 215);
-	}
+	button.loadButton();
 	
-
-	map_box.LoadBitmapByString({ "Resources/object/box.bmp" }, RGB(0, 255, 0));
-	map_button[0].LoadBitmapByString({ "Resources/object/button_blue_1.bmp", "Resources/object/button_blue_2.bmp" , "Resources/object/button_blue_3.bmp" }, RGB(0, 255, 0));	//blue purple red
-	map_button[1].LoadBitmapByString({ "Resources/object/button_purple_1.bmp", "Resources/object/button_purple_2.bmp" , "Resources/object/button_purple_3.bmp" }, RGB(0, 255, 0));
-	map_button[2].LoadBitmapByString({ "Resources/object/button_red_1.bmp", "Resources/object/button_red_2.bmp" , "Resources/object/button_red_3.bmp" }, RGB(0, 255, 0));
-	map_controller[0].LoadBitmapByString({ "Resources/object/controller_yellow_1.bmp", "Resources/object/controller_yellow_2.bmp" }, RGB(0, 255, 0));	//yellow blue green red white
-	map_controller[1].LoadBitmapByString({ "Resources/object/controller_blue_1.bmp", "Resources/object/controller_blue_2.bmp" }, RGB(255, 0, 0));
-	map_controller[2].LoadBitmapByString({ "Resources/object/controller_green_1.bmp", "Resources/object/controller_green_2.bmp" }, RGB(0, 255, 0));
-	map_controller[3].LoadBitmapByString({ "Resources/object/controller_red_1.bmp", "Resources/object/controller_red_2.bmp" }, RGB(0, 255, 0));
-	map_controller[4].LoadBitmapByString({ "Resources/object/controller_white_1.bmp", "Resources/object/controller_white_2.bmp" }, RGB(0, 255, 0));
-	map_diamond[0].LoadBitmapByString({"Resources/object/diamond_red.bmp"}, RGB(0, 255, 0));	//red blue white
-	map_diamond[1].LoadBitmapByString({ "Resources/object/diamond_blue.bmp" }, RGB(0, 255, 0));
-	map_diamond[2].LoadBitmapByString({ "Resources/object/diamond_white.bmp" }, RGB(0, 255, 0));
-	map_door[0].LoadBitmapByString({ "Resources/object/door_fire_1.bmp", "Resources/object/door_fire_2.bmp" });	//fire water
-	map_door[1].LoadBitmapByString({ "Resources/object/door_water_1.bmp", "Resources/object/door_water_2.bmp" });
-	map_pole[0].LoadBitmapByString({ "Resources/object/pole_M1_yellow_1.bmp", "Resources/object/pole_M1_yellow_2.bmp" });
-	map_pole[1].LoadBitmapByString({"Resources/object/pole_M1_purple_1.bmp", "Resources/object/pole_M1_purple_2.bmp" });
 
 	fireman.character.LoadBitmapByString({"Resources/characters/fireman_front_1.bmp"}, RGB(0, 255, 0));
 	fireman.character.SetTopLeft(38, 877);
 	watergirl.character.LoadBitmapByString({ "Resources/characters/watergirl_front_1.bmp" }, RGB(0, 255, 0));
 	watergirl.character.SetTopLeft(38, 737);
 
-	map.generateMap1();
+	map.generateMap();
+	mapButton.generateObject();
+	mapController.generateObject();
+	mapPole.generateObject();
+	mapBox.generateObject();
+	mapDoor.generateObject();
+	mapDiamond.generateObject();
+	mapPool.generateObject();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -136,7 +86,9 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	if (nFlags == VK_LBUTTON) {
-		IsMouseOverlap(point.x, point.y);
+		TestOverlap(point.x, point.y);
+		//IsMouseOverlap(point.x, point.y);
+		
 	}
 	
 }
@@ -147,6 +99,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+	
 }
 
 void CGameStateRun::OnRButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -159,88 +112,59 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {		
-	if (call_window) {
-		show_window();
+	scene.showScene(page_phase);
+
+	//Map1
+	if (page_phase == 6) {
+		map.showMap(page_phase - 5);
+		mapButton.showObject(page_phase - 5);
+		mapController.showObject(page_phase - 5);
+		mapPole.showObject(page_phase - 5);
+		mapBox.showObject(page_phase - 5);
+		mapDoor.showObject(page_phase - 5);
+		mapDiamond.showObject(page_phase - 5);
+		mapPool.showObject(page_phase - 5);
+
+		fireman.character.ShowBitmap();		//(38, 877)
+		watergirl.character.ShowBitmap();	//(38, 737)
 	}
-	else {
-		show_page();
+
+	//Map2
+	if (page_phase == 7) {
+		map.showMap(page_phase - 5);
+		fireman.character.ShowBitmap();		//(1200, 70)
+		watergirl.character.ShowBitmap();	//(70, 460)
 	}
+
+	//Map3
+	if (page_phase == 8) {
+		map.showMap(page_phase - 5);
+		fireman.character.ShowBitmap();		//(1020, 745)
+		watergirl.character.ShowBitmap();	//(905, 745)
+	}
+
+	//Map4
+	if (page_phase == 9) {
+		map.showMap(page_phase - 5);
+		fireman.character.ShowBitmap();		//(50, 875)
+		watergirl.character.ShowBitmap();	//(1285, 875)
+	}
+
+	//Map5
+	if (page_phase == 10) {
+		map.showMap(page_phase - 5);
+		fireman.character.ShowBitmap();		//(130, 875)
+		watergirl.character.ShowBitmap();	//(1140, 41)
+	}
+	
+
 	ShowWindowCoordinate();
+	button.showButton(page_phase);
+	
+	
+	
 }
 
-void CGameStateRun::show_page() {
-	if (page_phase == 0) {	//home page
-
-		background.SetFrameIndexOfBitmap(0);
-		background.ShowBitmap();
-		button[0].ShowBitmap();	//button_play
-		button[1].ShowBitmap();	//button_setting
-
-	}
-	if (page_phase == 1) {	//menu
-		background.SetFrameIndexOfBitmap(1);
-		background.ShowBitmap();
-		button[3].ShowBitmap();	//back
-	}
-	/*
-	if (page_phase == 2) {	//map1
-		// background.SetFrameIndexOfBitmap(2);
-		//這邊你先當我在對位子，之後地圖(block)再改生成方法
-		background.ShowBitmap();
-		button[4].ShowBitmap();
-		map_diamond[0].SetTopLeft(720, 950);
-		map_diamond[0].ShowBitmap();
-		map_diamond[1].SetTopLeft(1000, 950);
-		map_diamond[1].ShowBitmap();
-		map_diamond[0].SetTopLeft(250, 470);
-		map_diamond[0].ShowBitmap();
-		map_diamond[1].SetTopLeft(850, 500);
-		map_diamond[1].ShowBitmap();
-		map_diamond[1].SetTopLeft(60, 200);
-		map_diamond[1].ShowBitmap();
-		map_diamond[0].SetTopLeft(370, 70);
-		map_diamond[0].ShowBitmap();
-		map_diamond[1].SetTopLeft(800, 150);
-		map_diamond[1].ShowBitmap();
-		map_controller[0].SetTopLeft(310, 663);
-		map_controller[0].ShowBitmap();
-		map_pole[0].SetTopLeft(40, 540);	//40,685
-		map_pole[0].ShowBitmap();
-		map_pole[1].SetTopLeft(1226, 400);	//1226,545
-		map_pole[1].ShowBitmap();
-		map_button[0].SetTopLeft(470, 509);
-		map_button[0].ShowBitmap();
-		map_button[0].SetTopLeft(1020, 360);
-		map_button[0].ShowBitmap();
-		map_box.SetTopLeft(725, 265);
-		map_box.ShowBitmap();
-		map_door[0].SetTopLeft(1130, 120);
-		map_door[0].ShowBitmap();
-		map_door[1].SetTopLeft(1240, 120);
-		map_door[1].ShowBitmap();
-		
-	}*/
-	if (page_phase == 2) {
-		map.showMap1();
-		fireman.character.ShowBitmap();
-		watergirl.character.ShowBitmap();
-	}
-}
-
-void CGameStateRun::show_window() {
-	// setting window
-	if (window_phase == 0) {
-		window[0].ShowBitmap();
-		button[7].ShowBitmap();
-	}
-	// paused window
-	if (window_phase == 1) {
-		window[1].ShowBitmap();
-		button[8].ShowBitmap();		//end
-		button[9].ShowBitmap();		//resume
-		button[10].ShowBitmap();	//retry
-	}
-}
 
 void CGameStateRun::ShowWindowCoordinate() {
 	// 座標轉成字串
@@ -262,56 +186,82 @@ void CGameStateRun::ShowWindowCoordinate() {
 }
 
 
+
 void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
-	// playButton at Home Page
-	if ((mouse_x >= button[0].GetLeft() && mouse_x <= button[0].GetLeft() + 300) && (mouse_y >= button[0].GetTop() && mouse_y <= button[0].GetTop() + 120) && page_phase == 0) {
-		background.SetFrameIndexOfBitmap(2);
+	
+	//playButton at Home
+	if (button.ifOverlap(0, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
+		page_phase = 6;
+	}
+	//settingButton at Home
+	if (button.ifOverlap(1, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
 		page_phase = 2;
 	}
-	// settingButton at Home Page
-	if ((mouse_x >= button[1].GetLeft() && mouse_x <= button[1].GetLeft() + 110) && (mouse_y >= button[1].GetTop() && mouse_y <= button[1].GetTop() + 110) && page_phase == 0) {
-		button[7].SetTopLeft(560, 700);
-		window_phase = 0;
-		call_window = true;
-	}
+	
 
-	// backButton at Stage Menu
-	if ((mouse_x >= button[3].GetLeft() && mouse_x <= button[3].GetLeft() + 340) && (mouse_y >= button[3].GetTop() && mouse_y <= button[3].GetTop() + 150) && page_phase == 1) {
-		background.SetFrameIndexOfBitmap(0);
+
+	//stageButton at Menu
+	for (int i = 2; i < 7; i++) {
+		if (button.ifOverlap(i, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
+			page_phase = i+4;
+		}
+	}
+	//backButton at Menu
+	if (button.ifOverlap(7, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
 		page_phase = 0;
 	}
-
-	// backButton at Setting Menu
-	if ((mouse_x >= button[7].GetLeft() && mouse_x <= button[7].GetLeft() + 340) && (mouse_y >= button[7].GetTop() && mouse_y <= button[7].GetTop() + 150) && call_window == true && window_phase == 0) {
-		call_window = false;
-		page_phase = 0;
+	//pausedButton at Map
+	if (button.ifOverlap(8, CPoint(mouse_x, mouse_y)) && page_phase >= 6) {
+		page_phase = 3;
 	}
-	// settingButton at Map 
-	if ((mouse_x >= button[4].GetLeft() && mouse_x <= button[4].GetLeft() + 35) && (mouse_y >= button[4].GetTop() && mouse_y <= button[4].GetTop() + 40) && page_phase == 2) {
-		button[8].SetTopLeft(290,560);		//end
-		button[9].SetTopLeft(820,560);		//resume
-		button[10].SetTopLeft(560,690);	//retry
-		window_phase = 1;
-		call_window = true;
+	
+	if (button.ifOverlap(9, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
+		//music on/off
+	}
+	if (button.ifOverlap(10, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
+		//effect on/of
+	}
+	//backButton at setting
+	if (button.ifOverlap(11, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
+		page_phase = 1;
+	}
+	//at paused
+	if (button.ifOverlap(12, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
+		//end
+		page_phase = 1;
+	}
+	if (button.ifOverlap(13, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
+		//resume
+	}
+	if (button.ifOverlap(14, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
+		//skip
+	}
+	//at die
+	if (button.ifOverlap(15, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
+		//menu
+		page_phase = 1;
+	}
+	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
+		//retry
+		page_phase = 1;
+	}
+	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
+		//skip
+		page_phase = 1;
+	}
+	//continueButton at pass
+	if (button.ifOverlap(18, CPoint(mouse_x, mouse_y)) && page_phase == 5) {
+		page_phase = 1;
 	}
 
-	// backButton at Paused Menu
-	if ((mouse_x >= button[8].GetLeft() && mouse_x <= button[8].GetLeft() + 300) && (mouse_y >= button[8].GetTop() && mouse_y <= button[8].GetTop() + 125) && call_window == true && window_phase == 1) {
-		call_window = false;
-		page_phase = 1;		//menu		
+}
+
+
+void CGameStateRun::TestOverlap(int mouse_x, int mouse_y) {
+	if (mouse_x <= 400) {
+		page_phase--;
 	}
-
-	// resumeButton at Paused Menu
-	if ((mouse_x >= button[9].GetLeft() && mouse_x <= button[9].GetLeft() + 300) && (mouse_y >= button[8].GetTop() && mouse_y <= button[8].GetTop() + 125) && call_window == true && window_phase == 1) {
-		call_window = false;
-		page_phase = 2;		//map1 (可能要改 或偵測回哪張地圖
+	if (mouse_x >= 400) {
+		page_phase++;
 	}
-
-	// retryButton at Paused Menu
-	if ((mouse_x >= button[10].GetLeft() && mouse_x <= button[10].GetLeft() + 300) && (mouse_y >= button[10].GetTop() && mouse_y <= button[10].GetTop() + 125) && call_window == true && window_phase == 1) {
-		call_window = false;
-		page_phase = 2;		//map1 (可能要改 或偵測回哪張地圖
-	}
-
-
 }

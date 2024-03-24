@@ -7,11 +7,16 @@
 
 class Map{
 public:
-	int map1[29][40];
-	game_framework::CMovingBitmap mapResource[29][40];
+	int map[29][40];
 
-	void generateMap1();
-	void showMap1();
+	game_framework::CMovingBitmap mapResource1[29][40];
+	game_framework::CMovingBitmap mapResource2[29][40];
+	game_framework::CMovingBitmap mapResource3[29][40];
+	game_framework::CMovingBitmap mapResource4[29][40];
+	game_framework::CMovingBitmap mapResource5[29][40];
+
+	void generateMap();
+	void showMap(int map_stage);
 
 };
 #endif // !MYMAP_H

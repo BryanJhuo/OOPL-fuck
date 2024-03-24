@@ -10,13 +10,28 @@ void Watergirl::IsMoving() {
 		this->moveRight();
 	if (this->IsAButtonClick)
 		this->moveLeft();
-	if (this->IsWButtonClick) {
-		if (Watergirl::IsTimesUp())
-			this->IsWButtonClick = false;
-		else
-			this->moveJumpUp();
+	if (this->IsWButtonClick && this->IsDButtonClick) {
+		if (this->jumpHeight <= 3) {
+			this->moveRightJumpUp();
+			this->jumpHeight++;
+		}
+		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
+			this->moveRightJumpDown();
+			this->jumpHeight++;
+		}
+		Sleep(25);
 	}
-	Watergirl::IsDropDown();
+	if (this->IsWButtonClick && this->IsAButtonClick) {
+		if (this->jumpHeight <= 3) {
+			this->moveLeftJumpUp();
+			this->jumpHeight++;
+		}
+		else if (this->jumpHeight >= 4 && this->jumpHeight <= 7) {
+			this->moveLeftJumpDown();
+			this->jumpHeight++;
+		}
+		Sleep(25);
+	}
 }
 
 void Watergirl::IsButtonUp(UINT nChar) {
@@ -29,10 +44,7 @@ void Watergirl::IsButtonUp(UINT nChar) {
 		this->IsAButtonClick = false;
 		break;
 	case VK_W:
-		if (!Watergirl::IsTimesUp()) {
-			this->IsWButtonClick = false;
-			Watergirl::IsDropDown();
-		}
+		this->IsWButtonClick = false;
 		break;
 	}
 }
@@ -48,19 +60,7 @@ void Watergirl::IsButtonDown(UINT nChar) {
 		break;
 	case VK_W:
 		this->IsWButtonClick = true;
-		this->start = clock_type::now();
+		this->jumpHeight = 0;
 		break;
 	}
-}
-
-bool Watergirl::IsTimesUp() {
-	if (std::chrono::duration_cast<time_type>(clock_type::now() - this->start).count() < 400)
-		return false;
-	else
-		return true;
-}
-
-void Watergirl::IsDropDown() {
-	if (this->character.GetTop() + this->character.GetHeight() < 975 && !this->IsWButtonClick)
-		this->moveJumpDown();
 }
