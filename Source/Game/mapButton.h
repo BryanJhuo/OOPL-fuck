@@ -10,6 +10,7 @@ public:
 
 	void generateObject();
 	void showObject(int map_stage);
+	//void overlapReturn(game_framework::CMovingBitmap character);
 
 };
 

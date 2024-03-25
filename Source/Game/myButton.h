@@ -22,7 +22,7 @@ public:
 	
 	bool ifOverlap(int index, const CPoint& pt) {
 		auto& btn = button[index];
-		CPoint pos = { btn.GetTop(), btn.GetLeft() };
+		CPoint pos = { btn.GetLeft(), btn.GetTop() };
 		int height = btn.GetHeight();
 		int width = btn.GetWidth();
 
