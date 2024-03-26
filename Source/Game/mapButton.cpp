@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "../Game/mapButton.h"
 
+
+
 void MapButton::generateObject() {
 	for (int i = 0; i < 2; i++) {
 		mapButton[i].LoadBitmap({ "Resources/object/button_purple_1.bmp", "Resources/object/button_purple_3.bmp" }, RGB(0,255,0));
@@ -21,3 +23,14 @@ void MapButton::showObject(int map_stage) {
 
 	}
 }
+
+/*
+void MapButton::overlapReturn(game_framework::CMovingBitmap character) {
+	if (game_framework::CMovingBitmap::IsOverlap(mapButton[0], character)) {
+		mapButton[0].SetFrameIndexOfBitmap[1];
+	}
+	else {
+		//mapButton[0].SetFrameIndexOfBitmap[0];
+	}
+}
+*/
