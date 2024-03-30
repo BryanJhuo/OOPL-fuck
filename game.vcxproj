@@ -250,6 +250,7 @@
     <ClCompile Include="Source\Game\mapController.cpp" />
     <ClCompile Include="Source\Game\mapDiamond.cpp" />
     <ClCompile Include="Source\Game\mapDoor.cpp" />
+    <ClCompile Include="Source\Game\mapFan.cpp" />
     <ClCompile Include="Source\Game\mapPole.cpp" />
     <ClCompile Include="Source\Game\mapPool.cpp" />
     <ClCompile Include="Source\Game\myButton.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="Source\Game\mapController.h" />
     <ClInclude Include="Source\Game\mapDiamond.h" />
     <ClInclude Include="Source\Game\mapDoor.h" />
+    <ClInclude Include="Source\Game\mapFan.h" />
     <ClInclude Include="Source\Game\mapPole.h" />
     <ClInclude Include="Source\Game\mapPool.h" />
     <ClInclude Include="Source\Game\myButton.h" />

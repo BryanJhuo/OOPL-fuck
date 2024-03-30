@@ -6,7 +6,7 @@
 
 class MapButton : public Object {
 public:
-	game_framework::CMovingBitmap mapButton[2];
+	game_framework::CMovingBitmap mapButton[4];
 
 	void generateObject();
 	void showObject(int map_stage);

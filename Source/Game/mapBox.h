@@ -7,7 +7,7 @@
 
 class MapBox: public Object {
 public:
-	game_framework::CMovingBitmap mapBox[1];
+	game_framework::CMovingBitmap mapBox;
 
 	void generateObject();
 	void showObject(int map_stage);
