@@ -6,8 +6,9 @@
 
 class MapPool : public Object {
 public:
-	game_framework::CMovingBitmap mapPool[3];
-
+	game_framework::CMovingBitmap redPool[8];
+	game_framework::CMovingBitmap bluePool[8];
+	game_framework::CMovingBitmap greenPool;
 	void generateObject();
 	void showObject(int map_stage);
 

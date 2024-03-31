@@ -6,7 +6,7 @@
 
 class MapController: public Object {
 public:
-	game_framework::CMovingBitmap mapController[1];
+	game_framework::CMovingBitmap mapController[6];
 
 	void generateObject();
 	void showObject(int map_stage);

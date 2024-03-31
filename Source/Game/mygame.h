@@ -49,6 +49,7 @@
 #include "../Game/mapDoor.h"
 #include "../Game/mapDiamond.h"
 #include "../Game/mapPool.h"
+#include "../Game/mapFan.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -125,6 +126,7 @@ namespace game_framework {
 		MapDoor mapDoor;
 		MapDiamond mapDiamond;
 		MapPool mapPool;
+		MapFan mapFan;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
