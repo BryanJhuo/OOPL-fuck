@@ -12,12 +12,15 @@ url : https://i-gamer.net/site/16086.html
 Virtual Key Code
 url : https://learn.microsoft.com/zh-tw/windows/win32/inputdev/virtual-key-codes
 
+Library
+url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework  
+
 ## 每周進度
 |  週數   |  成員1 Eva  |   Done   | 成員2 Bryan|Done|
 |  :---:  |   :---:    | :---:    | :---:    | :---:    |
 |Week2    |確認題目/找素材| &#10004; |確定題目/找素材| &#10004; |
-|Week3    |關卡地圖製作1|  &#10004;  |人物移動-左右| &#10004; |
-|Week4    |關卡地圖製作1|  &#10004;  |人物移動-重力| [ ] |
+|Week3    |關卡地圖製作1| &#10004; |人物移動-左右| &#10004; |
+|Week4    |關卡地圖製作1| &#10004; |人物移動-重力| &#10004; |
 |Week5    |主畫面製作| &#10004; |人物移動-重力| [ ] |
 |Week6    |關卡選擇畫面製作| [ ] |關卡地圖製作-判定| [ ] |
 |Week7    |死亡視窗| [ ] |關卡機關製作-冰/火門| [ ] |
