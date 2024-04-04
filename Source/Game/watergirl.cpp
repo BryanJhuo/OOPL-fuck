@@ -5,7 +5,7 @@ const int VK_S = 0x53;
 const int VK_D = 0x44;
 const int VK_W = 0x57;
 
-void Watergirl::IsMoving() {
+void Watergirl::IsMoving(Map map) {
 	if (this->IsDButtonClick)
 		this->moveRight();
 	if (this->IsAButtonClick)
@@ -16,7 +16,7 @@ void Watergirl::IsMoving() {
 		else
 			this->moveJumpUp();
 	}
-	this->IsDropDown();
+	
 }
 
 void Watergirl::IsButtonUp(UINT nChar) {
@@ -31,7 +31,6 @@ void Watergirl::IsButtonUp(UINT nChar) {
 	case VK_W:
 		if (!this->IsTimesUp()) {
 			this->IsWButtonClick = false;
-			this->IsDropDown();
 		}
 		break;
 	}
@@ -58,9 +57,4 @@ bool Watergirl::IsTimesUp() {
 		return false;
 	else
 		return true;
-}
-
-void Watergirl::IsDropDown() {
-	if (this->character.GetTop() + this->character.GetHeight() < 975 && !this->IsWButtonClick)
-		this->moveJumpDown();
 }
