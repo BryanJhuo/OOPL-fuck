@@ -29,9 +29,14 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	fireman.IsMoving();
-	watergirl.IsMoving();
-
+	if (this->page_phase == 6){
+		fireman.IsMoving(this->map);
+		watergirl.IsMoving(this->map);
+		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map);
+		// if (fireman.IsRightButtonClick) this->fireman.isBumpRightWall(this->map);
+		// else this->fireman.isBumpHead(this->map);
+		// if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map);
+	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定

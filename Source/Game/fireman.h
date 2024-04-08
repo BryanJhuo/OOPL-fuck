@@ -14,11 +14,14 @@ public:
 	bool IsUpButtonClick = false;
 	std::chrono::time_point<clock_type> start;
 
-	void IsMoving();
+	void IsMoving(Map map);
 	void IsButtonUp(UINT);
 	void IsButtonDown(UINT);
-	void IsDropDown();
+	bool isBumpHead(Map map);
+	bool isBumpRightWall(Map map);
+	bool isBumpLeftWall(Map map);
 	bool IsTimesUp();
+
 };
 
 #endif
