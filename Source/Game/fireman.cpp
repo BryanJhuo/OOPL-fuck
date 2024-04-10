@@ -68,9 +68,9 @@ bool Fireman::isBumpHead(Map map) {
 bool Fireman::isBumpRightWall(Map map) {
 	int current_X = this->character.GetLeft() + this->character.GetWidth();
 	int current_Y = this->character.GetTop();
-	if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
+	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
 		return false;
-	else if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
+	else */if (map.getPlaceName(current_X  / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
 		return false;
 	return true;
 }
@@ -78,9 +78,9 @@ bool Fireman::isBumpRightWall(Map map) {
 bool Fireman::isBumpLeftWall(Map map) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
-	if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
+	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
 		return false;
-	else if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
+	else */if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
 		return false;
 	return true;
 }

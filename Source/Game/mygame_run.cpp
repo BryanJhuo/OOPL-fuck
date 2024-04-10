@@ -33,9 +33,7 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		fireman.IsMoving(this->map);
 		watergirl.IsMoving(this->map);
 		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map);
-		// if (fireman.IsRightButtonClick) this->fireman.isBumpRightWall(this->map);
-		// else this->fireman.isBumpHead(this->map);
-		// if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map);
+		this->isControllerOverlap(this->page_phase - 5);
 	}
 }
 
@@ -291,3 +289,23 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 
 }
 
+void CGameStateRun::isControllerOverlap(int page) {
+	if (page == 1) {
+		// overlap from right side (opening controller)
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapController.mapController[0])
+			/*&& this->fireman.character.GetLeft() > this->mapController.mapController[0].GetLeft())*/){
+			this->mapController.mapController[0].SetFrameIndexOfBitmap(1);
+			this->movingPole(page, this->mapPole, 0);
+		}
+
+	}
+	
+}
+
+void CGameStateRun::movingPole(int page, MapPole pole, int index) {
+	int current_Height = pole.mapPole[index].GetTop();
+	if (current_Height < 630 /*&& pole.poleState[index] == 0*/) {
+		pole.mapPole[index].SetTopLeft(pole.mapPole[index].GetLeft(), current_Height + 10);
+	}
+	else if (current_Height >= 630) pole.poleState[index] = 1;
+}

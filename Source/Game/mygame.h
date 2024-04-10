@@ -104,6 +104,8 @@ namespace game_framework {
 		void ShowWindowCoordinate();
 		void IsMouseOverlap(int mouse_x, int mouse_y);
 		void TestOverlap(int mouse_x, int mouse_y);
+		void movingPole(int page, MapPole pole, int index);
+		void isControllerOverlap(int page);
 	private:
 		int page_phase = 0;	//page select {home:0, menu:1, map1:2, map2:3, ...}
 		/*

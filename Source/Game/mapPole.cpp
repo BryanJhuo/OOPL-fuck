@@ -23,6 +23,7 @@ void MapPole::generateObject() {
 
 	for (int i = 0; i < 17; i++) {
 		mapPole[i].SetTopLeft(0, 0);
+		poleState[i] = 0;
 	}
 
 }

@@ -7,6 +7,7 @@
 class MapPole: public Object {
 public:
 	game_framework::CMovingBitmap mapPole[17];
+	int poleState[17];
 
 	void generateObject();
 	void showObject(int map_stage);
