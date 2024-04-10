@@ -23,16 +23,15 @@ void MapPole::generateObject() {
 
 	for (int i = 0; i < 17; i++) {
 		mapPole[i].SetTopLeft(0, 0);
-		poleState[i] = 0;
 	}
+	mapPole[0].SetTopLeft(35, 525);
+	mapPole[1].SetTopLeft(1225, 425);
 
 }
 
 void MapPole::showObject(int map_stage) {
 	switch (map_stage) {
 	case 1: {
-		mapPole[0].SetTopLeft(35, 525);
-		mapPole[1].SetTopLeft(1225, 425);
 		for (int i = 0; i < 2; i++) {
 			mapPole[i].ShowBitmap();
 		}

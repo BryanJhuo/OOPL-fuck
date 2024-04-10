@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "../Game/fireman.h"
 
-void Fireman::IsMoving(Map map){
+void Fireman::IsMoving(Map &map){
 	if (this->IsRightButtonClick && this->isBumpRightWall(map))
 		this->moveRight();
 	if (this->IsLeftButtonClick && this->isBumpLeftWall(map))
@@ -49,13 +49,13 @@ void Fireman::IsButtonUp(UINT nChar) {
 }
 
 bool Fireman::IsTimesUp() {
-	if (std::chrono::duration_cast<time_type>(clock_type::now() - start).count() < 1000)
+	if (std::chrono::duration_cast<time_type>(clock_type::now() - start).count() < 700)
 		return false;
 	else
 		return true;
 }
 
-bool Fireman::isBumpHead(Map map) {
+bool Fireman::isBumpHead(Map &map) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
 	if (map.getPlaceName(current_X / 35, current_Y / 35) == "Resources/block/block_1.bmp"){
@@ -65,7 +65,7 @@ bool Fireman::isBumpHead(Map map) {
 	return true;
 }
 
-bool Fireman::isBumpRightWall(Map map) {
+bool Fireman::isBumpRightWall(Map &map) {
 	int current_X = this->character.GetLeft() + this->character.GetWidth();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
@@ -75,7 +75,7 @@ bool Fireman::isBumpRightWall(Map map) {
 	return true;
 }
 
-bool Fireman::isBumpLeftWall(Map map) {
+bool Fireman::isBumpLeftWall(Map &map) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")

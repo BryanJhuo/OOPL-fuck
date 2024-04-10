@@ -33,7 +33,9 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		fireman.IsMoving(this->map);
 		watergirl.IsMoving(this->map);
 		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map);
+		if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map);
 		this->isControllerOverlap(this->page_phase - 5);
+		this->isButtonOverlap(this->page_phase - 5);
 	}
 }
 
@@ -130,11 +132,6 @@ void CGameStateRun::OnShow()
 
 		fireman.character.ShowBitmap();		//(38, 877)
 		watergirl.character.ShowBitmap();	//(38, 737)
-
-		if (CMovingBitmap::IsOverlap(mapButton.mapButton[0], fireman.character)) {	//test isoverlap
-			mapButton.mapButton[0].SetFrameIndexOfBitmap(1);
-		}
-		else mapButton.mapButton[0].SetFrameIndexOfBitmap(0);
 	}
 
 	//Map2
@@ -293,19 +290,78 @@ void CGameStateRun::isControllerOverlap(int page) {
 	if (page == 1) {
 		// overlap from right side (opening controller)
 		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapController.mapController[0])
-			/*&& this->fireman.character.GetLeft() > this->mapController.mapController[0].GetLeft())*/){
+			&& this->fireman.character.GetLeft() > this->mapController.mapController[0].GetLeft() + 30){
 			this->mapController.mapController[0].SetFrameIndexOfBitmap(1);
-			this->movingPole(page, this->mapPole, 0);
+			this->mapController.controllerState[0] = true;
+			this->controllerMode = 1;
+		}
+		// overlap from left side (closing controller)
+		else if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapController.mapController[0])
+			&& this->fireman.character.GetLeft() + 35 < this->mapController.mapController[0].GetLeft()){
+			this->mapController.mapController[0].SetFrameIndexOfBitmap(0);
+			this->mapController.controllerState[0] = true;
+			this->controllerMode = 2;
+		}
+
+		if (this->mapController.controllerState[0]) {
+			this->movingPole(1, 0);
 		}
 
 	}
 	
 }
 
-void CGameStateRun::movingPole(int page, MapPole pole, int index) {
-	int current_Height = pole.mapPole[index].GetTop();
-	if (current_Height < 630 /*&& pole.poleState[index] == 0*/) {
-		pole.mapPole[index].SetTopLeft(pole.mapPole[index].GetLeft(), current_Height + 10);
+void CGameStateRun::movingPole(int page, int index) {
+	int current_Height = this->mapPole.mapPole[index].GetTop();
+	
+	if (current_Height < 630 && this->controllerMode == 1) {
+		this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height + 10);
 	}
-	else if (current_Height >= 630) pole.poleState[index] = 1;
+	else if (current_Height > 525 && this->controllerMode == 2) {
+		this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height - 10);
+	}
+	else { 
+		this->mapController.controllerState[0] = false; 
+		this->controllerMode = 0;
+	}
+}
+
+void CGameStateRun::isButtonOverlap(int page) {
+	if (page == 1) {
+		// Button Up
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[0])) {
+			this->mapButton.mapButton[0].SetFrameIndexOfBitmap(1);
+			this->mapButton.buttonState[0] = true;
+			this->buttonMode[0] = 1;
+		}
+		else if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[1])) {
+			this->mapButton.mapButton[1].SetFrameIndexOfBitmap(1);
+			this->mapButton.buttonState[1] = true;
+			this->buttonMode[1] = 1;
+		}
+		else {
+			this->mapButton.mapButton[0].SetFrameIndexOfBitmap(0);
+			this->mapButton.buttonState[0] = false;
+			this->buttonMode[0] = 2;
+			this->mapButton.mapButton[1].SetFrameIndexOfBitmap(0);
+			this->mapButton.buttonState[1] = false;
+			this->buttonMode[1] = 2;
+		}
+		this->movingPolefromButton(1, this->mapPole.mapPole[1]);
+	}
+}
+
+void CGameStateRun::movingPolefromButton(int page, CMovingBitmap &pole) {
+	int current_Height = pole.GetTop();
+
+	if (current_Height < 525 && (this->buttonMode[0] == 1 || this->buttonMode[1] == 1)) {
+		pole.SetTopLeft(pole.GetLeft(), current_Height + 10);
+	}
+	else if (current_Height > 425 && (this->buttonMode[0] == 2 || this->buttonMode[1] == 2)) {
+		pole.SetTopLeft(pole.GetLeft(), current_Height - 10);
+	}
+	else {
+		this->buttonMode[0] = 0;
+		this->buttonMode[1] = 0;
+	}
 }

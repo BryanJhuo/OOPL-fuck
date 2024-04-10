@@ -12,6 +12,7 @@ void MapController::generateObject() {
 	
 	for (int i = 0; i < 6; i++) {
 		mapController[i].SetTopLeft(0, 0);
+		controllerState[i] = false;
 	}
 }
 
