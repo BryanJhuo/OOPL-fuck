@@ -12,6 +12,7 @@ void MapButton::generateObject() {
 	
 	for (int i = 0; i < 4; i++) {
 		mapButton[i].SetTopLeft(0, 0);
+		buttonState[i] = false;
 	}
 }
 
@@ -20,10 +21,11 @@ void MapButton::showObject(int map_stage) {
 		case 1: {
 			mapButton[0].SetTopLeft(350, 490);
 			mapButton[1].SetTopLeft(1090, 350);
-
-			for (int i = 0; i < 2; i++) {
+			mapButton[0].ShowBitmap();
+			mapButton[1].ShowBitmap();
+			/*for (int i = 0; i < 2; i++) {
 				mapButton[i].ShowBitmap();
-			}
+			}*/
 			break;
 		}
 

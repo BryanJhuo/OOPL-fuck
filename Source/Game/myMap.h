@@ -18,6 +18,8 @@ public:
 	void generateMap();
 	void showMap(int map_stage);
 	std::string getPlaceName(int x, int y);
+	int getPlace_X(int x, int y);
 	int getPlace_Y(int x, int y);
+	
 };
 #endif // !MYMAP_H

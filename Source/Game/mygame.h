@@ -104,8 +104,14 @@ namespace game_framework {
 		void ShowWindowCoordinate();
 		void IsMouseOverlap(int mouse_x, int mouse_y);
 		void TestOverlap(int mouse_x, int mouse_y);
+		void movingPole(int page, int index);
+		void movingPolefromButton(int page, CMovingBitmap &pole);
+		void isControllerOverlap(int page);
+		void isButtonOverlap(int page);
 	private:
-		int page_phase = 0;	//page select {home:0, menu:1, map1:2, map2:3, ...}
+		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
+		int controllerMode = 0; // 0: close 1: up 2: down
+		int buttonMode[3] = {0, 0, 0}; // 0: close 1: up 2: down
 		/*
 		CMovingBitmap map_box;
 		CMovingBitmap map_button[3];	//blue purple red
