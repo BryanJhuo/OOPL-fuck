@@ -83,6 +83,19 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	fireman.IsButtonDown(nChar);
 	watergirl.IsButtonDown(nChar);
 
+	//test for passWindow
+	const int VK_P = 0x50;
+	if (nChar == VK_P) {
+		page_phase = 5;
+		scene.showScene(page_phase);
+	}
+	//test for dieWindow
+	const int VK_O = 0x4F;
+	if (nChar == VK_O) {
+		page_phase = 4;
+		scene.showScene(page_phase);
+	}
+
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -95,36 +108,15 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 	if (nFlags == VK_LBUTTON) {
 		IsMouseOverlap(point.x, point.y);
-
 	}
-
 }
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	const auto audio = CAudio::Instance();
+	//const auto audio = CAudio::Instance();
 
-	if (page_phase == 0 && musicPlay) {
-		audio->Stop(1);
-		audio->Stop(2);
-		audio->Play(0, true);
-	}
-	else if (page_phase == 1 && musicPlay) {
-		audio->Stop(0);
-		audio->Stop(2);
-		audio->Play(1, true);
-	}
+	
 
-	else if (page_phase >= 6 && musicPlay) {
-		audio->Stop(0);
-		audio->Stop(1);
-		audio->Play(2, true);
-	}
-	else {
-		audio->Stop(0);
-		audio->Stop(1);
-		audio->Stop(2);
-	}
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -200,11 +192,21 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	//playButton at Home
 	if (button.ifOverlap(0, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
 		page_phase = 6;
+		if (musicPlay) {
+			audio->Stop(0);
+			audio->Stop(1);
+			audio->Play(2, true);
+		}
 		buttonClick = true;
 	}
 	//settingButton at Home
 	if (button.ifOverlap(1, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
 		page_phase = 2;
+		if (musicPlay) {
+			audio->Stop(0);
+			audio->Stop(1);
+			audio->Play(2, true);
+		}
 		buttonClick = true;
 	}
 
@@ -212,12 +214,22 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	for (int i = 2; i < 7; i++) {
 		if (button.ifOverlap(i, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
 			page_phase = i + 4;
+			if (musicPlay) {
+				audio->Stop(0);
+				audio->Stop(1);
+				audio->Play(2, true);
+			}
 			buttonClick = true;
 		}
 	}
 	//backButton at Menu
 	if (button.ifOverlap(7, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
 		page_phase = 0;
+		if (musicPlay) {
+			audio->Stop(1);
+			audio->Stop(2);
+			audio->Play(0, true);
+		}
 		buttonClick = true;
 	}
 	//pausedButton at Map
@@ -231,6 +243,7 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 		buttonClick = true;
 		if (musicPlay) {
 			button.isClick(9);
+			audio->Pause();
 			musicPlay = false;
 		}
 		else {
@@ -253,6 +266,12 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	//backButton at setting
 	if (button.ifOverlap(11, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
 		page_phase = 0;
+		if (musicPlay) {
+			audio->Stop(1);
+			audio->Stop(2);
+			audio->Play(0, true);
+		}
+	
 		buttonClick = true;
 		
 	}
@@ -260,25 +279,34 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	if (button.ifOverlap(12, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
 		//end
 		page_phase = 1;
+		if (musicPlay) {
+			audio->Stop(0);
+			audio->Stop(2);
+			audio->Play(1, true);
+		}
 		buttonClick = true;
 	}
 	if (button.ifOverlap(13, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
-		//resume
+		//resume unwork
 		buttonClick = true;
 	}
 	if (button.ifOverlap(14, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
-		//skip
+		//skip unwork
 		buttonClick = true;
 	}
 	//at die
 	if (button.ifOverlap(15, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//menu
 		page_phase = 1;
+		if (musicPlay) {
+			audio->Stop(0);
+			audio->Stop(2);
+			audio->Play(1, true);
+		}
 		buttonClick = true;
 	}
 	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
-		//retry
-		page_phase = 1;
+		//retry unwork
 		buttonClick = true;
 	}
 	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
@@ -289,14 +317,23 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	//continueButton at pass
 	if (button.ifOverlap(18, CPoint(mouse_x, mouse_y)) && page_phase == 5) {
 		page_phase = 1;
+		if (musicPlay) {
+			audio->Stop(0);
+			audio->Stop(2);
+			audio->Play(1, true);
+		}
 		buttonClick = true;
 	}
 
+
+	//Music & Effec
 	if (buttonClick && effectPlay) {
 		audio->Play(5, false);
 		buttonClick = false;
 	}
 
+
+	
 }
 
 void CGameStateRun::isControllerOverlap(int page) {

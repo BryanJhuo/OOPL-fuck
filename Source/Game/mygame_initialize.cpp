@@ -41,7 +41,7 @@ void CGameStateInit::OnInit()
 	audio->Load(5, R"(Resources/audio/ButtonClick.wav)");
 	audio->Load(6, R"(Resources/audio/Diamond.wav)");
 	audio->Load(7, R"(Resources/audio/Door.wav)");
-	
+	audio->Play(0, true);
 }
 
 void CGameStateInit::OnBeginState()
