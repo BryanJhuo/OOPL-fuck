@@ -74,6 +74,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	mapDiamond.generateObject();
 	mapPool.generateObject();
 	mapFan.generateObject();
+
+	
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -100,6 +102,29 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
+	const auto audio = CAudio::Instance();
+
+	if (page_phase == 0 && musicPlay) {
+		audio->Stop(1);
+		audio->Stop(2);
+		audio->Play(0, true);
+	}
+	else if (page_phase == 1 && musicPlay) {
+		audio->Stop(0);
+		audio->Stop(2);
+		audio->Play(1, true);
+	}
+
+	else if (page_phase >= 6 && musicPlay) {
+		audio->Stop(0);
+		audio->Stop(1);
+		audio->Play(2, true);
+	}
+	else {
+		audio->Stop(0);
+		audio->Stop(1);
+		audio->Stop(2);
+	}
 }
 
 void CGameStateRun::OnMouseMove(UINT nFlags, CPoint point)	// 處理滑鼠的動作
@@ -117,10 +142,15 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	
+	
+
 	scene.showScene(page_phase);
 
-	//Map1
-	if (page_phase == 6) {
+	
+
+	if (page_phase >= 6) {	//Map
+
 		map.showMap(page_phase - 5);
 		mapButton.showObject(page_phase - 5);
 		mapController.showObject(page_phase - 5);
@@ -129,64 +159,11 @@ void CGameStateRun::OnShow()
 		mapDoor.showObject(page_phase - 5);
 		mapDiamond.showObject(page_phase - 5);
 		mapPool.showObject(page_phase - 5);
+		mapFan.showObject(page_phase - 5);
 
 		fireman.character.ShowBitmap();		//(38, 877)
 		watergirl.character.ShowBitmap();	//(38, 737)
 	}
-
-	//Map2
-	if (page_phase == 7) {
-		map.showMap(page_phase - 5);
-
-		mapDoor.showObject(page_phase - 5);
-		mapDiamond.showObject(page_phase - 5);
-		mapPool.showObject(page_phase - 5);
-
-		fireman.character.ShowBitmap();		//(1200, 70)
-		watergirl.character.ShowBitmap();	//(70, 460)
-	}
-
-	//Map3
-	if (page_phase == 8) {
-		map.showMap(page_phase - 5);
-
-		mapDoor.showObject(page_phase - 5);
-		mapDiamond.showObject(page_phase - 5);
-		mapPole.showObject(page_phase - 5);
-		mapController.showObject(page_phase - 5);
-		mapButton.showObject(page_phase - 5);
-
-		fireman.character.ShowBitmap();		//(1020, 745)
-		watergirl.character.ShowBitmap();	//(905, 745)
-	}
-
-	//Map4
-	if (page_phase == 9) {
-		map.showMap(page_phase - 5);
-
-		mapDoor.showObject(page_phase - 5);
-		mapFan.showObject(page_phase - 5);
-		mapPool.showObject(page_phase - 5);
-		mapDiamond.showObject(page_phase - 5);
-
-		fireman.character.ShowBitmap();		//(50, 875)
-		watergirl.character.ShowBitmap();	//(1285, 875)
-	}
-
-	//Map5
-	if (page_phase == 10) {
-		map.showMap(page_phase - 5);
-
-		mapDoor.showObject(page_phase - 5);
-		mapPole.showObject(page_phase - 5);
-		mapController.showObject(page_phase - 5);
-		mapDiamond.showObject(page_phase - 5);
-		
-
-		fireman.character.ShowBitmap();		//(130, 875)
-		watergirl.character.ShowBitmap();	//(1140, 41)
-	}
-
 
 	ShowWindowCoordinate();
 	button.showButton(page_phase);
@@ -218,70 +195,106 @@ void CGameStateRun::ShowWindowCoordinate() {
 
 
 void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
-
+	const auto audio = CAudio::Instance();
+	bool buttonClick = false;
 	//playButton at Home
 	if (button.ifOverlap(0, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
 		page_phase = 6;
+		buttonClick = true;
 	}
 	//settingButton at Home
 	if (button.ifOverlap(1, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
 		page_phase = 2;
+		buttonClick = true;
 	}
-
-
 
 	//stageButton at Menu
 	for (int i = 2; i < 7; i++) {
 		if (button.ifOverlap(i, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
 			page_phase = i + 4;
+			buttonClick = true;
 		}
 	}
 	//backButton at Menu
 	if (button.ifOverlap(7, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
 		page_phase = 0;
+		buttonClick = true;
 	}
 	//pausedButton at Map
 	if (button.ifOverlap(8, CPoint(mouse_x, mouse_y)) && page_phase >= 6) {
 		page_phase = 3;
+		buttonClick = true;
 	}
 
 	if (button.ifOverlap(9, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
 		//music on/off
+		buttonClick = true;
+		if (musicPlay) {
+			button.isClick(9);
+			musicPlay = false;
+		}
+		else {
+			button.isClick(9);
+			musicPlay = true;
+		}
 	}
 	if (button.ifOverlap(10, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
 		//effect on/of
+		buttonClick = true;
+		if (effectPlay) {
+			button.isClick(10);
+			effectPlay = false;
+		}
+		else {
+			button.isClick(10);
+			effectPlay = true;
+		}
 	}
 	//backButton at setting
 	if (button.ifOverlap(11, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
-		page_phase = 1;
+		page_phase = 0;
+		buttonClick = true;
+		
 	}
 	//at paused
 	if (button.ifOverlap(12, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
 		//end
 		page_phase = 1;
+		buttonClick = true;
 	}
 	if (button.ifOverlap(13, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
 		//resume
+		buttonClick = true;
 	}
 	if (button.ifOverlap(14, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
 		//skip
+		buttonClick = true;
 	}
 	//at die
 	if (button.ifOverlap(15, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//menu
 		page_phase = 1;
+		buttonClick = true;
 	}
 	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//retry
 		page_phase = 1;
+		buttonClick = true;
 	}
 	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//skip
 		page_phase = 1;
+		buttonClick = true;
 	}
 	//continueButton at pass
 	if (button.ifOverlap(18, CPoint(mouse_x, mouse_y)) && page_phase == 5) {
 		page_phase = 1;
+		buttonClick = true;
+	}
+
+	if (buttonClick && effectPlay) {
+		audio->Play(5, false);
+		buttonClick = false;
 	}
 
 }

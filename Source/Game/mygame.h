@@ -112,14 +112,8 @@ namespace game_framework {
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down
 		int buttonMode[3] = {0, 0, 0}; // 0: close 1: up 2: down
-		/*
-		CMovingBitmap map_box;
-		CMovingBitmap map_button[3];	//blue purple red
-		CMovingBitmap map_controller[5];	//yellow blue green red white
-		CMovingBitmap map_diamond[3];	//red blue white
-		CMovingBitmap map_door[2];	//fire water
-		CMovingBitmap map_pole[3];	//M1_purple,yellow
-		*/
+		bool musicPlay = true;
+		bool effectPlay = true;
 		Fireman fireman;
 		Watergirl watergirl;
 		Map map;
