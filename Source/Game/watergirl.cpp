@@ -5,7 +5,7 @@ const int VK_S = 0x53;
 const int VK_D = 0x44;
 const int VK_W = 0x57;
 
-void Watergirl::IsMoving(Map &map) {
+void Watergirl::IsMoving(Map &map, MapPole &pole) {
 	if (this->IsDButtonClick && this->isBumpRightWall(map))
 		this->moveRight();
 	if (this->IsAButtonClick && this->isBumpLeftWall(map))

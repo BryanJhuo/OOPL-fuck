@@ -43,7 +43,7 @@ int Character::findClosePlace(Map &map, int x, int y, int height) {
 //	return ret;
 //}
 
-void Character::IsMoving(Map &map) {}
+void Character::IsMoving(Map &map, MapPole &pole) {}
 
 void Character::IsButtonUp(UINT nChar) {}
 

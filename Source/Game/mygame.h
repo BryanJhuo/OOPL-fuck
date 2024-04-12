@@ -108,6 +108,7 @@ namespace game_framework {
 		void movingPolefromButton(int page, CMovingBitmap &pole);
 		void isControllerOverlap(int page);
 		void isButtonOverlap(int page);
+	
 	private:
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down

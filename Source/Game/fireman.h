@@ -2,6 +2,7 @@
 
 #ifndef FIREMAN_H
 #define FIREMAN_H
+
 #include "../Game/myCharacter.h"
 #include <chrono>
 using clock_type = std::chrono::high_resolution_clock;
@@ -15,12 +16,13 @@ public:
 	
 	std::chrono::time_point<clock_type> start;
 
-	void IsMoving(Map &map);
+	void IsMoving(Map &map, MapPole &pole);
 	void IsButtonUp(UINT);
 	void IsButtonDown(UINT);
 	bool isBumpHead(Map &map);
 	bool isBumpRightWall(Map &map);
 	bool isBumpLeftWall(Map &map);
+	bool isBumpPole(MapPole& pole);
 	bool IsTimesUp();
 
 };

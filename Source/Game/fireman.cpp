@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "../Game/fireman.h"
 
-void Fireman::IsMoving(Map &map){
+void Fireman::IsMoving(Map &map, MapPole &pole){
 	if (this->IsRightButtonClick && this->isBumpRightWall(map))
 		this->moveRight();
 	if (this->IsLeftButtonClick && this->isBumpLeftWall(map))
 		this->moveLeft();
-	if (this->IsUpButtonClick && this->isBumpHead(map)) {
+	if (this->IsUpButtonClick && this->isBumpHead(map) && this->isBumpPole(pole)) {
 		if (this->IsTimesUp())
 			this->IsUpButtonClick = false;
 		else
@@ -84,3 +84,29 @@ bool Fireman::isBumpLeftWall(Map &map) {
 		return false;
 	return true;
 }
+
+bool Fireman::isBumpPole(MapPole& pole) {
+	int current_X = this->character.GetLeft();
+	int current_Y = this->character.GetTop();
+	for (auto object: pole.mapPole) {
+		if (this->character.IsOverlap(this->character, object)) {
+			this->IsUpButtonClick = false;
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+//void CGameStateRun::isBumpPole(int page, CMovingBitmap& pole) {
+//	// Overlap from bottom
+//	if (CMovingBitmap::IsOverlap(this->fireman.character, pole) && pole.GetTop() + pole.GetHeight() < this->fireman.character.GetTop()) {
+//		this->fireman.IsUpButtonClick = false;
+//	}
+//	// Overlap from Top
+//	else if (CMovingBitmap::IsOverlap(this->fireman.character, pole)
+//		&& pole.GetTop() + pole.GetHeight() > this->fireman.character.GetTop() + this->fireman.character.GetHeight()) {
+//		this->fireman.character.SetTopLeft(this->fireman.character.GetLeft(), pole.GetTop() - 3);
+//	}
+//
+//}
