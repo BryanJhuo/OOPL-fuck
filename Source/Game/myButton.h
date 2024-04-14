@@ -31,7 +31,7 @@ public:
 	}
 	
 
-	//bool isClick(int num, int mouse_x, int mouse_y);
+	void isClick(int num);
 
 
 };

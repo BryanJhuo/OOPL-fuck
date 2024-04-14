@@ -106,8 +106,22 @@ void Button::showButton(int page_phase) {
 }
 
 
-/*
-bool Button::isClick(int num, int mouse_x, int mouse_y) {
-	return false;
+
+void Button::isClick(int num) {
+	if (num == 9 ) {
+		if (button[9].GetFrameIndexOfBitmap() == 0) {
+			button[9].SetFrameIndexOfBitmap(1);
+		}
+		else if (button[9].GetFrameIndexOfBitmap() == 1) {
+			button[9].SetFrameIndexOfBitmap(0);
+		}
+	}
+	if (num == 10) {
+		if (button[10].GetFrameIndexOfBitmap() == 0) {
+			button[10].SetFrameIndexOfBitmap(1);
+		}
+		else if (button[10].GetFrameIndexOfBitmap() == 1) {
+			button[10].SetFrameIndexOfBitmap(0);
+		}
+	}
 }
-*/
