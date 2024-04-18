@@ -245,15 +245,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Game\fireman.cpp" />
-    <ClCompile Include="Source\Game\mapBox.cpp" />
-    <ClCompile Include="Source\Game\mapButton.cpp" />
-    <ClCompile Include="Source\Game\mapController.cpp" />
-    <ClCompile Include="Source\Game\mapDiamond.cpp" />
-    <ClCompile Include="Source\Game\mapDoor.cpp" />
-    <ClCompile Include="Source\Game\mapFan.cpp" />
-    <ClCompile Include="Source\Game\mapPole.cpp" />
-    <ClCompile Include="Source\Game\mapPool.cpp" />
-    <ClCompile Include="Source\Game\myAudio.cpp" />
     <ClCompile Include="Source\Game\myButton.cpp" />
     <ClCompile Include="Source\Game\mygame_initialize.cpp" />
     <ClCompile Include="Source\Game\mygame_over.cpp" />
@@ -276,15 +267,6 @@
     <ClInclude Include="Source\Core\StdAfx.h" />
     <ClInclude Include="Source\Game\config.h" />
     <ClInclude Include="Source\Game\fireman.h" />
-    <ClInclude Include="Source\Game\mapBox.h" />
-    <ClInclude Include="Source\Game\mapButton.h" />
-    <ClInclude Include="Source\Game\mapController.h" />
-    <ClInclude Include="Source\Game\mapDiamond.h" />
-    <ClInclude Include="Source\Game\mapDoor.h" />
-    <ClInclude Include="Source\Game\mapFan.h" />
-    <ClInclude Include="Source\Game\mapPole.h" />
-    <ClInclude Include="Source\Game\mapPool.h" />
-    <ClInclude Include="Source\Game\myAudio.h" />
     <ClInclude Include="Source\Game\myButton.h" />
     <ClInclude Include="Source\Game\myCharacter.h" />
     <ClInclude Include="Source\Game\mygame.h" />

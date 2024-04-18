@@ -157,9 +157,8 @@ void CGameStateRun::OnShow()
 		watergirl.character.ShowBitmap();	//(38, 737)
 	}
 
-	ShowWindowCoordinate();
 	button.showButton(page_phase);
-
+	ShowWindowCoordinate();
 
 
 }
