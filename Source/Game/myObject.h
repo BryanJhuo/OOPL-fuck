@@ -4,6 +4,7 @@
 
 #define MYOBJECT_H
 #include "../Library/gameutil.h"
+#include "../Game/myMap.h"
 
 using namespace game_framework;
 
@@ -12,6 +13,7 @@ namespace Object {
     public:
         virtual void generateObject() = 0;
         virtual void showObject(int map_stage) = 0;
+        void resetMap(int map_stage);
 
         bool is_Overlap(CMovingBitmap character, CMovingBitmap object);
     };
@@ -21,6 +23,7 @@ namespace Object {
         CMovingBitmap mapBox;
         void generateObject();
         void showObject(int map_stage);
+        void dropDown(Map &map);
     };
 
     class MapButton : public Object {
@@ -44,6 +47,9 @@ namespace Object {
         CMovingBitmap redDiamond[11];
         CMovingBitmap blueDiamond[11];
         CMovingBitmap whiteDiamond;
+
+        bool redState[11];
+        bool blueState[11];
         void generateObject();
         void showObject(int map_stage);
     };
@@ -51,6 +57,7 @@ namespace Object {
     class MapDoor : public Object {
     public:
         CMovingBitmap mapDoor[2];
+        bool doorState[2];
         void generateObject();
         void showObject(int map_stage);
     };

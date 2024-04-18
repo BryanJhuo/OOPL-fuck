@@ -42,7 +42,7 @@ void Scene::showScene(int page_phase) {
 		window[1].ShowBitmap();		//window
 	}
 
-	//diw window
+	//die window
 	if (page_phase == 4) {
 		window[2].ShowBitmap();		//window
 	}

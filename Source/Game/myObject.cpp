@@ -11,13 +11,26 @@ bool Object::Object::is_Overlap(CMovingBitmap character, CMovingBitmap object) {
 
 void Object::MapBox::generateObject() {
     mapBox.LoadBitmapByString({ "Resources/object/box.bmp" }, RGB(0, 255, 0));
-    mapBox.SetTopLeft(810, 260);
+    mapBox.SetTopLeft(810, 295);
 }
 
 void Object::MapBox::showObject(int map_stage) {
     if (map_stage == 1) {
         mapBox.ShowBitmap();
     }
+}
+
+void Object::MapBox::dropDown(Map &map) {
+    int current_X = this->mapBox.GetLeft();
+    int current_Y = this->mapBox.GetTop();
+    int distance = this->mapBox.GetTop() + 3;
+
+    std::string placeName = map.getPlaceName(current_X / 35, current_Y / 35);
+    if (placeName == "Resources/block/block_1.bmp")
+        distance = map.getPlace_Y(current_X / 35, current_Y / 35);
+
+    if (current_Y < distance)
+        this->mapBox.SetTopLeft(this->mapBox.GetLeft(), this->mapBox.GetTop() + 7);
 }
 
 void Object::MapButton::generateObject() {
@@ -113,6 +126,8 @@ void Object::MapDiamond::generateObject() {
         blueDiamond[i].LoadBitmapByString({ "Resources/object/diamond_blue.bmp", "Resources/object/diamond_0.bmp" }, RGB(0, 255, 0));
         redDiamond[i].SetTopLeft(0, 0);
         blueDiamond[i].SetTopLeft(0, 0);
+        redState[i] = true;
+        blueState[i] = true;
     }
     whiteDiamond.LoadBitmapByString({ "Resources/object/diamond_white.bmp", "Resources/object/diamond_white0.bmp" }, RGB(0, 255, 0));
     whiteDiamond.SetTopLeft(0, 0);
@@ -130,10 +145,12 @@ void Object::MapDiamond::showObject(int map_stage) {
         blueDiamond[3].SetTopLeft(680, 115);
 
         for (int i = 0; i < 3; i++) {
-            redDiamond[i].ShowBitmap();;
+            if (redState[i])
+                redDiamond[i].ShowBitmap();
         }
         for (int i = 0; i < 4; i++) {
-            blueDiamond[i].ShowBitmap();
+            if (blueState[i])
+                blueDiamond[i].ShowBitmap();
         }
         break;
     }
@@ -237,6 +254,8 @@ void Object::MapDoor::generateObject() {
     mapDoor[1].LoadBitmapByString({ "Resources/object/door_water_1.bmp", "Resources/object/door_water_2.bmp" }, RGB(0, 255, 0));
     mapDoor[0].SetTopLeft(1120, 110);
     mapDoor[1].SetTopLeft(1230, 110);
+    doorState[0] = false;
+    doorState[1] = false;
 }
 
 void Object::MapDoor::showObject(int map_stage) {
@@ -463,4 +482,8 @@ void Object::MapPool::showObject(int map_stage) {
         break;
     }
     }
+}
+
+void Object::Object::resetMap(int map_stage) {
+    
 }

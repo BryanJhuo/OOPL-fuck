@@ -9,8 +9,14 @@ void Fireman::IsMoving(Map &map){
 	if (this->IsUpButtonClick && this->isBumpHead(map)) {
 		if (this->IsTimesUp())
 			this->IsUpButtonClick = false;
-		else
-			this->moveJumpUp();
+		else{
+			if (this->IsRightButtonClick)
+				this->moveJumpUp(1);
+			else if (this->IsLeftButtonClick)
+				this->moveJumpUp(2);
+			else
+				this->moveJumpUp(0);
+		}
 	}
 
 }

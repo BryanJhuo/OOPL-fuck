@@ -14,7 +14,7 @@ public:
 	virtual void IsButtonDown(UINT) = 0;
 	void moveRight();
 	void moveLeft();
-	void moveJumpUp();
+	void moveJumpUp(int buttonState);
 	void moveJumpDown();
 	void isDropDown(Map &map);
 	int findClosePlace(Map &map, int x, int y, int height);
