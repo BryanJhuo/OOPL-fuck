@@ -8,8 +8,13 @@ void Character::moveRight() {
 void Character::moveLeft(){
 	this->character.SetTopLeft(this->character.GetLeft() - 7, this->character.GetTop());
 }
-void Character::moveJumpUp() {
-	this->character.SetTopLeft(this->character.GetLeft() , this->character.GetTop() - 6);
+void Character::moveJumpUp(int buttonState) {
+	if (buttonState == 0) // up
+		this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() - 6);
+	if (buttonState == 1) // right 
+		this->character.SetTopLeft(this->character.GetLeft() + 4, this->character.GetTop() - 6);
+	if (buttonState == 2) // left
+		this->character.SetTopLeft(this->character.GetLeft() - 4, this->character.GetTop() - 6);
 }
 void Character::moveJumpDown() {
 	this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() + 9);

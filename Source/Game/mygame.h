@@ -42,14 +42,7 @@
 #include "../Game/myMap.h"
 #include "../Game/myButton.h"
 #include "../Game/myScene.h"
-#include "../Game/mapButton.h"
-#include "../Game/mapController.h"
-#include "../Game/mapPole.h"
-#include "../Game/mapBox.h"
-#include "../Game/mapDoor.h"
-#include "../Game/mapDiamond.h"
-#include "../Game/mapPool.h"
-#include "../Game/mapFan.h"
+#include "../Game/myObject.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -108,6 +101,10 @@ namespace game_framework {
 		void movingPolefromButton(int page, CMovingBitmap &pole);
 		void isControllerOverlap(int page);
 		void isButtonOverlap(int page);
+		void isPoolOverlap(int page, CMovingBitmap &pool);
+		void isDoorOverlap(int page);
+		void isBoxOverlap(int page);
+		void isDiamondOverlap(int page);
 	private:
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down
@@ -119,14 +116,14 @@ namespace game_framework {
 		Map map;
 		Button button;
 		Scene scene;
-		MapButton mapButton;
-		MapController mapController;
-		MapPole mapPole;
-		MapBox mapBox;
-		MapDoor mapDoor;
-		MapDiamond mapDiamond;
-		MapPool mapPool;
-		MapFan mapFan;
+		Object::MapButton mapButton;
+		Object::MapController mapController;
+		Object::MapPole mapPole;
+		Object::MapBox mapBox;
+		Object::MapDoor mapDoor;
+		Object::MapDiamond mapDiamond;
+		Object::MapPool mapPool;
+		Object::MapFan mapFan;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

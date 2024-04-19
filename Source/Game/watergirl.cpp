@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "../Game/watergirl.h"
 
-const int VK_S = 0x53;
-const int VK_D = 0x44;
-const int VK_W = 0x57;
+const int VK_S = 0x53; // left (key S)
+const int VK_D = 0x46; // right (key F)
+const int VK_W = 0x45; // up (key E)
 
 void Watergirl::IsMoving(Map &map) {
 	if (this->IsDButtonClick && this->isBumpRightWall(map))
@@ -13,8 +13,14 @@ void Watergirl::IsMoving(Map &map) {
 	if (this->IsWButtonClick && this->isBumpHead(map)) {
 		if (this->IsTimesUp())
 			this->IsWButtonClick = false;
-		else
-			this->moveJumpUp();
+		else{
+			if (this->IsDButtonClick) // right
+				this->moveJumpUp(1);
+			else if (this->IsAButtonClick) // left
+				this->moveJumpUp(2);
+			else
+				this->moveJumpUp(0);
+		}
 	}
 	
 }

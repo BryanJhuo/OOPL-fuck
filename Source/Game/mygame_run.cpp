@@ -36,6 +36,11 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 		if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map);
 		this->isControllerOverlap(this->page_phase - 5);
 		this->isButtonOverlap(this->page_phase - 5);
+		this->isDoorOverlap(this->page_phase - 5);
+		this->isDiamondOverlap(this->page_phase - 5);
+		// this->isBoxOverlap(this->page_phase - 5);
+		this->isPoolOverlap(this->page_phase - 5, this->mapPool.greenPool);
+		this->isPoolOverlap(this->page_phase - 5, this->mapPool.bluePool[0]);
 	}
 }
 
@@ -157,9 +162,8 @@ void CGameStateRun::OnShow()
 		watergirl.character.ShowBitmap();	//(38, 737)
 	}
 
-	ShowWindowCoordinate();
 	button.showButton(page_phase);
-
+	ShowWindowCoordinate();
 
 
 }
@@ -308,6 +312,9 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//retry unwork
 		buttonClick = true;
+		this->fireman.character.SetTopLeft(38, 877);
+		this->watergirl.character.SetTopLeft(38, 737);
+		this->page_phase = 6;
 	}
 	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//skip
@@ -340,14 +347,14 @@ void CGameStateRun::isControllerOverlap(int page) {
 	if (page == 1) {
 		// overlap from right side (opening controller)
 		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapController.mapController[0])
-			&& this->fireman.character.GetLeft() > this->mapController.mapController[0].GetLeft() + 30){
+			&& this->fireman.character.GetLeft() < this->mapController.mapController[0].GetLeft()){
 			this->mapController.mapController[0].SetFrameIndexOfBitmap(1);
 			this->mapController.controllerState[0] = true;
 			this->controllerMode = 1;
 		}
 		// overlap from left side (closing controller)
 		else if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapController.mapController[0])
-			&& this->fireman.character.GetLeft() + 35 < this->mapController.mapController[0].GetLeft()){
+			&& this->fireman.character.GetLeft() + 20 > this->mapController.mapController[0].GetLeft() + 38){
 			this->mapController.mapController[0].SetFrameIndexOfBitmap(0);
 			this->mapController.controllerState[0] = true;
 			this->controllerMode = 2;
@@ -364,7 +371,7 @@ void CGameStateRun::isControllerOverlap(int page) {
 void CGameStateRun::movingPole(int page, int index) {
 	int current_Height = this->mapPole.mapPole[index].GetTop();
 	
-	if (current_Height < 630 && this->controllerMode == 1) {
+	if (current_Height < 675 && this->controllerMode == 1) {
 		this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height + 10);
 	}
 	else if (current_Height > 525 && this->controllerMode == 2) {
@@ -413,5 +420,64 @@ void CGameStateRun::movingPolefromButton(int page, CMovingBitmap &pole) {
 	else {
 		this->buttonMode[0] = 0;
 		this->buttonMode[1] = 0;
+	}
+}
+
+void CGameStateRun::isPoolOverlap(int page, CMovingBitmap& pool) {
+	if (page == 1) {
+		if (CMovingBitmap::IsOverlap(this->fireman.character, pool)) 
+			this->page_phase = 4;
+	}
+}
+
+void CGameStateRun::isDoorOverlap(int page) {
+	// Red Door
+	if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapDoor.mapDoor[0])) {
+		this->mapDoor.mapDoor[0].SetFrameIndexOfBitmap(1);
+		this->mapDoor.doorState[0] = true;
+	}
+	else {
+		this->mapDoor.mapDoor[0].SetFrameIndexOfBitmap(0);
+		this->mapDoor.doorState[0] = false;
+	}
+	// Blue Door
+	if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDoor.mapDoor[1])) {
+		this->mapDoor.mapDoor[1].SetFrameIndexOfBitmap(1);
+		this->mapDoor.doorState[1] = true;
+	}
+	else {
+		this->mapDoor.mapDoor[1].SetFrameIndexOfBitmap(0);
+		this->mapDoor.doorState[1] = false;
+	}
+	// Is Game Clear
+	if (this->mapDoor.doorState[0] && this->mapDoor.doorState[1]) {
+		this->page_phase = 5;
+	}
+
+}
+
+void CGameStateRun::isBoxOverlap(int page) {
+	bool push = false;
+	if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapBox.mapBox))
+		push = true;
+	if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapBox.mapBox))
+		push = true;
+	
+	if (push)
+		this->mapBox.dropDown(this->map);
+}
+
+void CGameStateRun::isDiamondOverlap(int page) {
+	if (page == 1) {
+		// red
+		for (int i = 0; i < 3; i++) {
+			if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapDiamond.redDiamond[i]))
+				this->mapDiamond.redState[i] = false;
+		}
+
+		for (int i = 0; i < 4; i++) {
+			if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDiamond.blueDiamond[i]))
+				this->mapDiamond.blueState[i] = false;
+		}
 	}
 }
