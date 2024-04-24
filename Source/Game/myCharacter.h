@@ -4,6 +4,7 @@
 #define myCharacter_h
 #include "../Library/gameutil.h"
 #include "../Game/myMap.h"
+#include "../Game/myObject.h"
 
 class Character {
 public:
@@ -16,9 +17,8 @@ public:
 	void moveLeft();
 	void moveJumpUp(int buttonState);
 	void moveJumpDown();
-	void isDropDown(Map &map);
+	void isDropDown(Map &map, Object::MapPole &pole, int page);
 	int findClosePlace(Map &map, int x, int y, int height);
-	// int findBounder(Map& map, int x, int y);
 
 };
 

@@ -10,22 +10,29 @@ void Character::moveLeft(){
 }
 void Character::moveJumpUp(int buttonState) {
 	if (buttonState == 0) // up
-		this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() - 6);
+		this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() - 4);
 	if (buttonState == 1) // right 
-		this->character.SetTopLeft(this->character.GetLeft() + 4, this->character.GetTop() - 6);
+		this->character.SetTopLeft(this->character.GetLeft() + 3, this->character.GetTop() - 4);
 	if (buttonState == 2) // left
-		this->character.SetTopLeft(this->character.GetLeft() - 4, this->character.GetTop() - 6);
+		this->character.SetTopLeft(this->character.GetLeft() - 3, this->character.GetTop() - 4);
 }
 void Character::moveJumpDown() {
 	this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() + 9);
 }
 
-void Character::isDropDown(Map &map) {
+void Character::isDropDown(Map &map, Object::MapPole &pole, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop() + this->character.GetHeight();
 
 	int distance = this->findClosePlace(map, current_X / 35, current_Y / 35, current_Y);
-	// int bounder_x = this->findBounder(map, current_X / 35, current_Y / 35);
+	// the pole collision
+	if (page == 1) {
+		for (int i = 0; i < 2; i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(this->character, pole.mapPole[i]))
+				distance = pole.mapPole[i].GetTop();
+		}
+	}
+	// drop down to the distance
 	if (current_Y < distance)
 		this->moveJumpDown();
 }

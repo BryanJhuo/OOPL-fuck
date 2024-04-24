@@ -32,8 +32,8 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	if (this->page_phase == 6){
 		fireman.IsMoving(this->map);
 		watergirl.IsMoving(this->map);
-		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map);
-		if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map);
+		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map, this->mapPole, page_phase - 5);
+		if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map, this->mapPole, page_phase - 5);
 		this->isControllerOverlap(this->page_phase - 5);
 		this->isButtonOverlap(this->page_phase - 5);
 		this->isDoorOverlap(this->page_phase - 5);
