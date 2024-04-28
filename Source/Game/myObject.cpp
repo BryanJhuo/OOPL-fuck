@@ -11,7 +11,7 @@ bool Object::Object::is_Overlap(CMovingBitmap character, CMovingBitmap object) {
 
 void Object::MapBox::generateObject() {
     mapBox.LoadBitmapByString({ "Resources/object/box.bmp" }, RGB(0, 255, 0));
-    mapBox.SetTopLeft(810, 295);
+    mapBox.SetTopLeft(810, 293);
 }
 
 void Object::MapBox::showObject(int map_stage) {
@@ -22,8 +22,8 @@ void Object::MapBox::showObject(int map_stage) {
 
 void Object::MapBox::dropDown(Map &map) {
     int current_X = this->mapBox.GetLeft();
-    int current_Y = this->mapBox.GetTop();
-    int distance = this->mapBox.GetTop() + 3;
+    int current_Y = this->mapBox.GetTop() + this->mapBox.GetHeight();
+    int distance = this->mapBox.GetTop() + this->mapBox.GetHeight() + 3;
 
     std::string placeName = map.getPlaceName(current_X / 35, current_Y / 35);
     if (placeName == "Resources/block/block_1.bmp")
@@ -31,6 +31,15 @@ void Object::MapBox::dropDown(Map &map) {
 
     if (current_Y < distance)
         this->mapBox.SetTopLeft(this->mapBox.GetLeft(), this->mapBox.GetTop() + 7);
+}
+
+void Object::MapBox::movingBox(int mode) {
+    if (this->mapBox.GetLeft() > 210){
+        if (mode == 1) // moving left side
+            this->mapBox.SetTopLeft(this->mapBox.GetLeft() - 7, this->mapBox.GetTop());
+        if (mode == 2) // moving right side
+            this->mapBox.SetTopLeft(this->mapBox.GetLeft() + 7, this->mapBox.GetTop());
+    }
 }
 
 void Object::MapButton::generateObject() {

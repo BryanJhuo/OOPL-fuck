@@ -28,7 +28,8 @@ void Character::isDropDown(Map &map, Object::MapPole &pole, int page) {
 	// the pole collision
 	if (page == 1) {
 		for (int i = 0; i < 2; i++) {
-			if (game_framework::CMovingBitmap::IsOverlap(this->character, pole.mapPole[i]))
+			if (game_framework::CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() < pole.mapPole[i].GetTop())
 				distance = pole.mapPole[i].GetTop();
 		}
 	}
@@ -46,16 +47,8 @@ int Character::findClosePlace(Map &map, int x, int y, int height) {
 	return ret;
 }
 
-//int Character::findBounder(Map &map, int x, int y){
-//	int ret = 0;
-//	std::string placeName = map.getPlaceName(x, y);
-//	if (placeName == "Resources/block/block_1.bmp")
-//		ret = map.getPlace_X(x, y);
-//
-//	return ret;
-//}
 
-void Character::IsMoving(Map &map) {}
+void Character::IsMoving(Map &map, Object::MapPole& pole) {}
 
 void Character::IsButtonUp(UINT nChar) {}
 

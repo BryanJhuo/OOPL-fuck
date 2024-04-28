@@ -21,9 +21,11 @@ namespace Object {
     class MapBox : public Object {
     public:
         CMovingBitmap mapBox;
+        bool push = false;
         void generateObject();
         void showObject(int map_stage);
         void dropDown(Map &map);
+        void movingBox(int mode);
     };
 
     class MapButton : public Object {

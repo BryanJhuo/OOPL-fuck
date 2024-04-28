@@ -5,12 +5,12 @@ const int VK_S = 0x53; // left (key S)
 const int VK_D = 0x46; // right (key F)
 const int VK_W = 0x45; // up (key E)
 
-void Watergirl::IsMoving(Map &map) {
+void Watergirl::IsMoving(Map &map, Object::MapPole& pole) {
 	if (this->IsDButtonClick && this->isBumpRightWall(map))
 		this->moveRight();
 	if (this->IsAButtonClick && this->isBumpLeftWall(map))
 		this->moveLeft();
-	if (this->IsWButtonClick && this->isBumpHead(map)) {
+	if (this->IsWButtonClick && this->isBumpHead(map, pole)) {
 		if (this->IsTimesUp())
 			this->IsWButtonClick = false;
 		else{
@@ -65,7 +65,7 @@ bool Watergirl::IsTimesUp() {
 		return true;
 }
 
-bool Watergirl::isBumpHead(Map& map) {
+bool Watergirl::isBumpHead(Map& map, Object::MapPole& pole) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
 	if (map.getPlaceName(current_X / 35, current_Y / 35) == "Resources/block/block_1.bmp") {

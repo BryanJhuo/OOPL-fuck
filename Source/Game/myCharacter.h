@@ -10,7 +10,7 @@ class Character {
 public:
 	game_framework::CMovingBitmap character;
 
-	virtual void IsMoving(Map &map) = 0;
+	virtual void IsMoving(Map &map, Object::MapPole &pole) = 0;
 	virtual void IsButtonUp(UINT) = 0;
 	virtual void IsButtonDown(UINT) = 0;
 	void moveRight();
