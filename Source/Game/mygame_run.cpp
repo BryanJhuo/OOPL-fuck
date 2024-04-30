@@ -32,9 +32,12 @@ void CGameStateRun::OnMove()							// ²¾°Ê¹CÀ¸¤¸¯À
 	if (this->page_phase == 6){
 		fireman.IsMoving(this->map, this->mapPole);
 		watergirl.IsMoving(this->map, this->mapPole);
-		if (!fireman.IsUpButtonClick) this->fireman.isDropDown(this->map, this->mapPole, page_phase - 5);
-		if (!watergirl.IsWButtonClick) this->watergirl.isDropDown(this->map, this->mapPole, page_phase - 5);
+		if (!fireman.IsUpButtonClick) 
+			this->fireman.isDropDown(this->map, this->mapPole, this->mapBox, page_phase - 5);
+		if (!watergirl.IsWButtonClick) 
+			this->watergirl.isDropDown(this->map, this->mapPole, this->mapBox, page_phase - 5);
 		this->runOverlap(this->page_phase - 5);
+		
 	}
 }
 
@@ -306,8 +309,7 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
 		//retry unwork
 		buttonClick = true;
-		this->fireman.character.SetTopLeft(38, 877);
-		this->watergirl.character.SetTopLeft(38, 737);
+		this->resetLevel(this->page_phase - 3);
 		this->page_phase = 6;
 	}
 	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
@@ -335,6 +337,18 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 
 
 	
+}
+
+// reset level's everything when clicks the button of retry
+void CGameStateRun::resetLevel(int page) {
+	this->fireman.resetMap(page);
+	this->watergirl.resetMap(page);
+	this->mapBox.resetMap(page);
+	this->mapButton.resetMap(page);
+	this->mapController.resetMap(page);
+	this->mapDiamond.resetMap(page);
+	this->mapDoor.resetMap(page);
+	this->mapPole.resetMap(page);
 }
 
 void CGameStateRun::isControllerOverlap(int page, CMovingBitmap& character) {
@@ -375,6 +389,11 @@ void CGameStateRun::movingPole(int page, int index) {
 		this->mapController.controllerState[0] = false; 
 		this->controllerMode = 0;
 	}
+
+	if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapPole.mapPole[index]))
+		this->fireman.character.SetTopLeft(this->fireman.character.GetLeft(), this->mapPole.mapPole[index].GetTop() - 100);
+	if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapPole.mapPole[index]))
+		this->watergirl.character.SetTopLeft(this->watergirl.character.GetLeft(), this->mapPole.mapPole[index].GetTop() - 100);
 }
 
 void CGameStateRun::isButtonOverlap(int page, CMovingBitmap& character) {
@@ -415,6 +434,10 @@ void CGameStateRun::movingPolefromButton(int page, CMovingBitmap &pole) {
 		this->buttonMode[0] = 0;
 		this->buttonMode[1] = 0;
 	}
+	if (CMovingBitmap::IsOverlap(this->fireman.character, pole))
+		this->fireman.character.SetTopLeft(this->fireman.character.GetLeft(), pole.GetTop() - 100);
+	if (CMovingBitmap::IsOverlap(this->watergirl.character, pole))
+		this->watergirl.character.SetTopLeft(this->watergirl.character.GetLeft(), pole.GetTop() - 100);
 }
 
 void CGameStateRun::isPoolOverlap(int page, CMovingBitmap& character, CMovingBitmap& pool) {
@@ -459,7 +482,7 @@ void CGameStateRun::isBoxOverlap(int page, CMovingBitmap& character) {
 	}
 	// pusing Box from left side
 	else if (CMovingBitmap::IsOverlap(character, this->mapBox.mapBox)
-		&& character.GetLeft() < this->mapBox.mapBox.GetLeft()){
+		&& character.GetLeft() < this->mapBox.mapBox.GetLeft() - 25){
 		this->mapBox.push = true;
 		this->mapBox.movingBox(2);
 	}

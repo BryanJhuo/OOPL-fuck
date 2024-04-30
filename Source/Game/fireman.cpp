@@ -98,3 +98,8 @@ bool Fireman::isBumpLeftWall(Map &map) {
 		return false;
 	return true;
 }
+
+void Fireman::resetMap(int map_stage) {
+	if (map_stage == 1)
+		this->character.SetTopLeft(38, 877);
+}

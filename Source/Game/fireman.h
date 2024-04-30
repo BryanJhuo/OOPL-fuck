@@ -18,6 +18,7 @@ public:
 	void IsMoving(Map &map, Object::MapPole& pole);
 	void IsButtonUp(UINT);
 	void IsButtonDown(UINT);
+	void resetMap(int map_stage);
 	bool isBumpHead(Map& map, Object::MapPole &pole);
 	bool isBumpRightWall(Map &map);
 	bool isBumpLeftWall(Map &map);

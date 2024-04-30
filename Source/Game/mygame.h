@@ -106,6 +106,7 @@ namespace game_framework {
 		void isBoxOverlap(int page, CMovingBitmap& character);
 		void isDiamondOverlap(int page);
 		void runOverlap(int page);
+		void resetLevel(int page);
 	private:
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down

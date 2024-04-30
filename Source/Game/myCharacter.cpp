@@ -20,11 +20,11 @@ void Character::moveJumpDown() {
 	this->character.SetTopLeft(this->character.GetLeft(), this->character.GetTop() + 9);
 }
 
-void Character::isDropDown(Map &map, Object::MapPole &pole, int page) {
+void Character::isDropDown(Map &map, Object::MapPole &pole, Object::MapBox& box, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop() + this->character.GetHeight();
 
-	int distance = this->findClosePlace(map, current_X / 35, current_Y / 35, current_Y);
+	int distance = this->findClosePlace(map, (current_X + 27) / 35, current_Y / 35, current_Y);
 	// the pole collision
 	if (page == 1) {
 		for (int i = 0; i < 2; i++) {
@@ -32,6 +32,9 @@ void Character::isDropDown(Map &map, Object::MapPole &pole, int page) {
 				&& this->character.GetTop() < pole.mapPole[i].GetTop())
 				distance = pole.mapPole[i].GetTop();
 		}
+		if (game_framework::CMovingBitmap::IsOverlap(this->character, box.mapBox)
+			&& this->character.GetTop() < box.mapBox.GetTop())
+			distance = box.mapBox.GetTop();
 	}
 	// drop down to the distance
 	if (current_Y < distance)
@@ -53,3 +56,5 @@ void Character::IsMoving(Map &map, Object::MapPole& pole) {}
 void Character::IsButtonUp(UINT nChar) {}
 
 void Character::IsButtonDown(UINT nChar) {}
+
+void Character::resetMap(int map_stage) {}

@@ -13,11 +13,12 @@ public:
 	virtual void IsMoving(Map &map, Object::MapPole &pole) = 0;
 	virtual void IsButtonUp(UINT) = 0;
 	virtual void IsButtonDown(UINT) = 0;
+	virtual void resetMap(int map_stage);
 	void moveRight();
 	void moveLeft();
 	void moveJumpUp(int buttonState);
 	void moveJumpDown();
-	void isDropDown(Map &map, Object::MapPole &pole, int page);
+	void isDropDown(Map &map, Object::MapPole &pole, Object::MapBox &box,int page);
 	int findClosePlace(Map &map, int x, int y, int height);
 
 };

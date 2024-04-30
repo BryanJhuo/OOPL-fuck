@@ -94,3 +94,8 @@ bool Watergirl::isBumpLeftWall(Map& map) {
 		return false;
 	return true;
 }
+
+void Watergirl::resetMap(int map_stage) {
+	if (map_stage == 1)
+		this->character.SetTopLeft(38, 737);
+}
