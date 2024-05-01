@@ -3,7 +3,8 @@
 2024/03/04 initial project & add part of image  
 2024/03/14 add "Right/Left move and initial Jump move"   
 2024/03/15 add "class of Fireman, Watergirl and Character"  
-2024/03/17 add "use text file to generate map"
+2024/03/17 add "use text file to generate map"  
+2024/04/30 finish level One
 
 ## Resources
 原網頁版本 
@@ -21,10 +22,10 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 |Week2    |確認題目/找素材| &#10004; |確定題目/找素材| &#10004; |
 |Week3    |關卡地圖製作1| &#10004; |人物移動-左右| &#10004; |
 |Week4    |關卡地圖製作1| &#10004; |人物移動-重力| &#10004; |
-|Week5    |主畫面製作| &#10004; |人物移動-重力| [ ] |
-|Week6    |關卡選擇畫面製作| [ ] |關卡地圖製作-判定| [ ] |
-|Week7    |死亡視窗| [ ] |關卡機關製作-冰/火門| [ ] |
-|Week8    |過關視窗| [ ] |關卡機關製作-鑽石| [ ] |
+|Week5    |主畫面製作| &#10004; |人物移動-重力| &#10004; |
+|Week6    |關卡選擇畫面製作| [ ] |關卡地圖製作-判定| &#10004; |
+|Week7    |死亡視窗| [ ] |關卡機關製作-冰/火門| &#10004; |
+|Week8    |過關視窗| [ ] |關卡機關製作-鑽石| &#10004; |
 |Week9    |暫停畫面| [ ] |關卡機關製作-水/火/綠池| [ ] |
 |Week10   |各畫面連接|  &#10004;  |關卡機關製作-移動桿按鈕| [ ] |
 |Week11   |關卡地圖製作2|  &#10004;  |關卡機關製作-風扇| [ ] |
@@ -35,9 +36,11 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 |Week16   |Demo| [ ] |Demo| [ ] |
 |Week17   |報告製作| [ ] |報告製作| [ ] |
 
-### Make the Map.txt 更改地圖文字檔
-資料夾中有 mapSample.txt 為 40 * 29 的地圖基礎外框  
-再依要放的物件去更改編號
+## 各個關卡待修的小Bug
+### 第一關
+- [ ] 跳躍時左右撞牆判定
+- [ ] 箱子推到底時，角色應該也要停下
+- [ ] 升降梯頂頭判斷有小問題
 
 ---
 
@@ -86,3 +89,7 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 |Pole     |    11     |
 |Diamond  |   0,0,1   | 
 ![alt text](image-4.png)
+
+### Make the Map.txt 更改地圖文字檔
+資料夾中有 mapSample.txt 為 40 * 29 的地圖基礎外框  
+再依要放的物件去更改編號

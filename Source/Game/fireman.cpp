@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "../Game/fireman.h"
 
-void Fireman::IsMoving(Map &map){
+void Fireman::IsMoving(Map &map, Object::MapPole& pole){
 	if (this->IsRightButtonClick && this->isBumpRightWall(map))
 		this->moveRight();
 	if (this->IsLeftButtonClick && this->isBumpLeftWall(map))
 		this->moveLeft();
-	if (this->IsUpButtonClick && this->isBumpHead(map)) {
+	if (this->IsUpButtonClick && this->isBumpHead(map, pole)) {
 		if (this->IsTimesUp())
 			this->IsUpButtonClick = false;
 		else{
@@ -61,10 +61,18 @@ bool Fireman::IsTimesUp() {
 		return true;
 }
 
-bool Fireman::isBumpHead(Map &map) {
+bool Fireman::isBumpHead(Map &map, Object::MapPole &pole) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
-	if (map.getPlaceName(current_X / 35, current_Y / 35) == "Resources/block/block_1.bmp"){
+	bool check_1 = map.getPlaceName(current_X / 35, current_Y / 35) == "Resources/block/block_1.bmp";
+	bool check_2 = false;
+	for (int i = 0; i < 2; i++){
+		if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i]) 
+			&& this->character.GetTop() > pole.mapPole[i].GetTop()) 
+			check_2 = true; 
+	}
+		
+	if (check_1 || check_2){
 		this->IsUpButtonClick = false;
 		return false;
 	}
@@ -89,4 +97,9 @@ bool Fireman::isBumpLeftWall(Map &map) {
 	else */if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
 		return false;
 	return true;
+}
+
+void Fireman::resetMap(int map_stage) {
+	if (map_stage == 1)
+		this->character.SetTopLeft(38, 877);
 }

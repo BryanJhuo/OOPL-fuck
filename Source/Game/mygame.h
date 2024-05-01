@@ -99,12 +99,14 @@ namespace game_framework {
 		void TestOverlap(int mouse_x, int mouse_y);
 		void movingPole(int page, int index);
 		void movingPolefromButton(int page, CMovingBitmap &pole);
-		void isControllerOverlap(int page);
-		void isButtonOverlap(int page);
-		void isPoolOverlap(int page, CMovingBitmap &pool);
+		void isControllerOverlap(int page, CMovingBitmap &character);
+		void isButtonOverlap(int page, CMovingBitmap& character);
+		void isPoolOverlap(int page, CMovingBitmap& character ,CMovingBitmap &pool);
 		void isDoorOverlap(int page);
-		void isBoxOverlap(int page);
+		void isBoxOverlap(int page, CMovingBitmap& character);
 		void isDiamondOverlap(int page);
+		void runOverlap(int page);
+		void resetLevel(int page);
 	private:
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down

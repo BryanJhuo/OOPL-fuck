@@ -5,13 +5,15 @@ void Object::Object::generateObject(){ }
 
 void Object::Object::showObject(int map_stage){ }
 
+void Object::Object::resetMap(int map_stage){ }
+
 bool Object::Object::is_Overlap(CMovingBitmap character, CMovingBitmap object) {
     return CMovingBitmap::IsOverlap(character, object);
 }
 
 void Object::MapBox::generateObject() {
     mapBox.LoadBitmapByString({ "Resources/object/box.bmp" }, RGB(0, 255, 0));
-    mapBox.SetTopLeft(810, 295);
+    mapBox.SetTopLeft(810, 293);
 }
 
 void Object::MapBox::showObject(int map_stage) {
@@ -22,8 +24,8 @@ void Object::MapBox::showObject(int map_stage) {
 
 void Object::MapBox::dropDown(Map &map) {
     int current_X = this->mapBox.GetLeft();
-    int current_Y = this->mapBox.GetTop();
-    int distance = this->mapBox.GetTop() + 3;
+    int current_Y = this->mapBox.GetTop() + this->mapBox.GetHeight();
+    int distance = this->mapBox.GetTop() + this->mapBox.GetHeight() + 3;
 
     std::string placeName = map.getPlaceName(current_X / 35, current_Y / 35);
     if (placeName == "Resources/block/block_1.bmp")
@@ -31,6 +33,19 @@ void Object::MapBox::dropDown(Map &map) {
 
     if (current_Y < distance)
         this->mapBox.SetTopLeft(this->mapBox.GetLeft(), this->mapBox.GetTop() + 7);
+}
+
+void Object::MapBox::movingBox(int mode) {
+    if (mode == 1 && this->mapBox.GetLeft() > 210) // moving left side
+        this->mapBox.SetTopLeft(this->mapBox.GetLeft() - 7, this->mapBox.GetTop());
+    if (mode == 2 && this->mapBox.GetLeft() < 735) // moving right side
+        this->mapBox.SetTopLeft(this->mapBox.GetLeft() + 7, this->mapBox.GetTop());
+}
+
+void Object::MapBox::resetMap(int map_stage) {
+    if (map_stage == 1) {
+        this->mapBox.SetTopLeft(810, 293);
+    }
 }
 
 void Object::MapButton::generateObject() {
@@ -67,6 +82,13 @@ void Object::MapButton::showObject(int map_stage) {
         break;
     }
 
+    }
+}
+
+void Object::MapButton::resetMap(int map_stage) {
+    for (int i = 0; i < 4; i++) {
+        this->buttonState[i] = false;
+        this->mapButton[i].SetFrameIndexOfBitmap(0);
     }
 }
 
@@ -117,6 +139,13 @@ void Object::MapController::showObject(int map_stage) {
 
         break;
     }
+    }
+}
+
+void Object::MapController::resetMap(int map_stage){
+    for (int i = 0; i < 6; i++) {
+        this->controllerState[i] = false;
+        this->mapController[i].SetFrameIndexOfBitmap(0);
     }
 }
 
@@ -249,6 +278,13 @@ void Object::MapDiamond::showObject(int map_stage) {
     }
 }
 
+void Object::MapDiamond::resetMap(int map_stage) {
+    for (int i = 0; i < 11; i++) {
+        this->redState[i] = true;
+        this->blueState[i] = true;
+    }
+}
+
 void Object::MapDoor::generateObject() {
     mapDoor[0].LoadBitmapByString({ "Resources/object/door_fire_1.bmp", "Resources/object/door_fire_2.bmp" }, RGB(0, 255, 0));
     mapDoor[1].LoadBitmapByString({ "Resources/object/door_water_1.bmp", "Resources/object/door_water_2.bmp" }, RGB(0, 255, 0));
@@ -301,6 +337,13 @@ void Object::MapDoor::showObject(int map_stage) {
         break;
     }
     }
+}
+
+void Object::MapDoor::resetMap(int map_stage) {
+    this->doorState[0] = false;
+    this->doorState[1] = false;
+    this->mapDoor[0].SetFrameIndexOfBitmap(0);
+    this->mapDoor[1].SetFrameIndexOfBitmap(0);
 }
 
 void Object::MapFan::generateObject() {
@@ -410,6 +453,13 @@ void Object::MapPole::showObject(int map_stage) {
     }
 }
 
+void Object::MapPole::resetMap(int map_stage) {
+    if (map_stage == 1) {
+        mapPole[0].SetTopLeft(35, 525);
+        mapPole[1].SetTopLeft(1225, 425);
+    }
+}
+
 void Object::MapPool::generateObject() {
     redPool[0].LoadBitmapByString({ "Resources/object/pool_fire4_1.bmp" }, RGB(0, 255, 0));
     redPool[1].LoadBitmapByString({ "Resources/object/pool_fire3_1.bmp" }, RGB(0, 255, 0));
@@ -482,8 +532,4 @@ void Object::MapPool::showObject(int map_stage) {
         break;
     }
     }
-}
-
-void Object::Object::resetMap(int map_stage) {
-    
 }
