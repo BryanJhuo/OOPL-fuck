@@ -111,6 +111,9 @@ namespace game_framework {
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down
 		int buttonMode[3] = {0, 0, 0}; // 0: close 1: up 2: down
+		int last_stage = 1;
+		int click_button = 0;
+		bool buttonClick = false;
 		bool musicPlay = true;
 		bool effectPlay = true;
 		Fireman fireman;

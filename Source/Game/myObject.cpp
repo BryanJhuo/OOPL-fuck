@@ -425,7 +425,7 @@ void Object::MapPole::showObject(int map_stage) {
 
     case 5: {
         mapPole[4].SetTopLeft(590, 35);
-        mapPole[5].SetTopLeft(145, 270);
+        mapPole[5].SetTopLeft(140, 280);
         mapPole[9].SetTopLeft(420, 420);
         mapPole[12].SetTopLeft(455, 560);
         mapPole[6].SetTopLeft(560, 595);
