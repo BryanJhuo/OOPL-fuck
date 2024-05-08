@@ -13,7 +13,7 @@ void Button::loadButton() {
 	pass: (18)continue
 	*/
 	
-	button[0].LoadBitmapByString({ "Resources/home_page/button_play.bmp" });
+	button[0].LoadBitmapByString({ "Resources/home_page/button_play.bmp", "Resources/home_page/button_play.bmp" });
 	button[0].SetTopLeft(553, 530);		//playButton at Home
 	button[1].LoadBitmapByString({ "Resources/home_page/button_setting.bmp" });
 	button[1].SetTopLeft(100, 890);		//settingButton at Home  100, 890
@@ -27,29 +27,29 @@ void Button::loadButton() {
 	button[5].SetTopLeft(600, 230);		//stage4
 	button[6].LoadBitmapByString({ "Resources/menu/stage_gray.bmp", "Resources/menu/stage_green.bmp", "Resources/menu/stage_orange.bmp", "Resources/menu/stage_purple.bmp" });
 	button[6].SetTopLeft(600, 30);		//stage5
-	button[7].LoadBitmapByString({ "Resources/menu/button_back.bmp" });
+	button[7].LoadBitmapByString({ "Resources/menu/button_back.bmp", "Resources/menu/button_back_1.bmp" });
 	button[7].SetTopLeft(30, 830);		//backButton at menu
-	button[8].LoadBitmapByString({ "Resources/map/button_paused.bmp" }, RGB(0, 255, 0));
+	button[8].LoadBitmapByString({ "Resources/map/button_paused.bmp", "Resources/map/button_paused_1.bmp" }, RGB(0, 255, 0));
 	button[8].SetTopLeft(1320, 10);		//pausedButton at map
 	button[9].LoadBitmapByString({ "Resources/window/setting/button_music_1.bmp", "Resources/window/setting/button_music_2.bmp" });
 	button[9].SetTopLeft(823, 490);		
 	button[10].LoadBitmapByString({ "Resources/window/setting/button_effec_1.bmp", "Resources/window/setting/button_effec_2.bmp" });
 	button[10].SetTopLeft(405, 506);
-	button[11].LoadBitmapByString({ "Resources/window/setting/button_back.bmp" });
+	button[11].LoadBitmapByString({ "Resources/window/setting/button_back.bmp", "Resources/window/setting/button_back_1.bmp" });
 	button[11].SetTopLeft(560, 720);
-	button[12].LoadBitmapByString({ "Resources/window/paused/button_end.bmp" });	//跟button7的差異在一個回home 一個map
+	button[12].LoadBitmapByString({ "Resources/window/paused/button_end.bmp", "Resources/window/paused/button_end_1.bmp" });	//跟button7的差異在一個回home 一個map
 	button[12].SetTopLeft(290, 560);	//end
-	button[13].LoadBitmapByString({ "Resources/window/paused/button_resume.bmp" });
+	button[13].LoadBitmapByString({ "Resources/window/paused/button_resume.bmp", "Resources/window/paused/button_resume_1.bmp" });
 	button[13].SetTopLeft(820, 560);	//resume
-	button[14].LoadBitmapByString({ "Resources/window/paused/button_retry.bmp" });
+	button[14].LoadBitmapByString({ "Resources/window/paused/button_retry.bmp", "Resources/window/paused/button_retry_1.bmp" });
 	button[14].SetTopLeft(560, 690);	//retry
-	button[15].LoadBitmapByString({ "Resources/window/die/button_menu.bmp" });
+	button[15].LoadBitmapByString({ "Resources/window/die/button_menu.bmp", "Resources/window/die/button_menu_1.bmp" });
 	button[15].SetTopLeft(200, 660);
-	button[16].LoadBitmapByString({ "Resources/window/die/button_retry.bmp" });
+	button[16].LoadBitmapByString({ "Resources/window/die/button_retry.bmp", "Resources/window/die/button_retry_1.bmp" });
 	button[16].SetTopLeft(550, 660);
-	button[17].LoadBitmapByString({ "Resources/window/die/button_skip.bmp" });
+	button[17].LoadBitmapByString({ "Resources/window/die/button_skip.bmp", "Resources/window/die/button_skip_1.bmp" });
 	button[17].SetTopLeft(920, 660);
-	button[18].LoadBitmapByString({ "Resources/window/pass/button_continue.bmp" });
+	button[18].LoadBitmapByString({ "Resources/window/pass/button_continue.bmp", "Resources/window/pass/button_continue_1.bmp" });
 	button[18].SetTopLeft(480, 720);
 }
 
@@ -107,7 +107,10 @@ void Button::showButton(int page_phase) {
 
 
 
-void Button::isClick(int num) {
+void Button::buttonDown(int num) {
+	if (num == 7 || num == 8 || (num >= 11 && num <= 18)) {
+		button[num].SetFrameIndexOfBitmap(1);
+	}
 	if (num == 9 ) {
 		if (button[9].GetFrameIndexOfBitmap() == 0) {
 			button[9].SetFrameIndexOfBitmap(1);
@@ -124,4 +127,11 @@ void Button::isClick(int num) {
 			button[10].SetFrameIndexOfBitmap(0);
 		}
 	}
+}
+
+void Button::buttonUp(int num) {
+	if (num == 7 || num == 8 || (num >= 11 && num <= 18)) {
+		button[num].SetFrameIndexOfBitmap(0);
+	}
+
 }

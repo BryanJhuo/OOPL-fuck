@@ -115,8 +115,124 @@ void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 
 void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 {
-	//const auto audio = CAudio::Instance();
+	const auto audio = CAudio::Instance();
+	if (buttonClick) {
+		buttonClick = false;
+		button.buttonUp(click_button);
+		//button click effect
+		if (effectPlay) {
+			audio->Play(5, false);
+		}
 
+		switch (click_button) {
+			case 0:
+				//plauButton at Home
+				page_phase = 6;
+				if (musicPlay) {
+					audio->Stop(0);
+					audio->Stop(1);
+					audio->Play(2, true);
+				}
+				break;
+			case 1:
+				//settingButton at Home
+				page_phase = 2;
+				if (musicPlay) {
+					audio->Stop(0);
+					audio->Stop(1);
+					audio->Play(2, true);
+				}
+				break;
+			case 7 :
+				//backButton at Menu
+				page_phase = 0;
+				if (musicPlay) {
+					audio->Stop(1);
+					audio->Stop(2);
+					audio->Play(0, true);
+				}
+				break;
+			case 8:
+				//pausedButton at Map
+				page_phase = 3;
+				break;
+			case 9:
+				//musicButton at setting
+				if (musicPlay) {
+					audio->Pause();
+					musicPlay = false;
+				}
+				else {
+					musicPlay = true;
+				}
+				break;
+			case 10:
+				//effectButton at setting
+				if (effectPlay) {
+					effectPlay = false;
+				}
+				else {
+					effectPlay = true;
+				}
+				break;
+			case 11:
+				//backButton at setting
+				page_phase = 0;
+				if (musicPlay) {
+					audio->Stop(1);
+					audio->Stop(2);
+					audio->Play(0, true);
+				}
+				break;
+			case 12:
+				//endButton at paused
+				page_phase = 1;
+				if (musicPlay) {
+					audio->Stop(0);
+					audio->Stop(2);
+					audio->Play(1, true);
+				}
+				break;
+			case 13:
+				//resumeButton at paused
+				this->page_phase = last_stage;
+				break;
+			case 14:
+				//retryButton at paused
+				buttonClick = true;
+				this->resetLevel(last_stage - 5);
+				this->page_phase = last_stage;
+				break;
+			case 15:
+				//munuButton at die
+				page_phase = 1;
+				if (musicPlay) {
+					audio->Stop(0);
+					audio->Stop(2);
+					audio->Play(1, true);
+				}
+				this->resetLevel(last_stage - 5);
+				break;
+			case 16:
+				//retruButton at die
+				this->resetLevel(last_stage - 5);
+				this->page_phase = last_stage;
+				break;
+			case 17:
+				//skipButton at die
+				page_phase = 1;
+				break;
+			case 18:
+				//continueButton at pass
+				page_phase = 1;
+				if (musicPlay) {
+					audio->Stop(0);
+					audio->Stop(2);
+					audio->Play(1, true);
+				}
+				break;
+		}
+	}
 	
 
 }
@@ -144,7 +260,7 @@ void CGameStateRun::OnShow()
 	
 
 	if (page_phase >= 6) {	//Map
-
+		last_stage = page_phase;	//紀錄所在關卡 用於重製&繼續
 		map.showMap(page_phase - 5);
 		mapButton.showObject(page_phase - 5);
 		mapController.showObject(page_phase - 5);
@@ -189,25 +305,16 @@ void CGameStateRun::ShowWindowCoordinate() {
 
 void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 	const auto audio = CAudio::Instance();
-	bool buttonClick = false;
+	buttonClick = false;
+	
 	//playButton at Home
 	if (button.ifOverlap(0, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
-		page_phase = 6;
-		if (musicPlay) {
-			audio->Stop(0);
-			audio->Stop(1);
-			audio->Play(2, true);
-		}
+		click_button = 0;
 		buttonClick = true;
 	}
 	//settingButton at Home
 	if (button.ifOverlap(1, CPoint(mouse_x, mouse_y)) && page_phase == 0) {
-		page_phase = 2;
-		if (musicPlay) {
-			audio->Stop(0);
-			audio->Stop(1);
-			audio->Play(2, true);
-		}
+		click_button = 1;
 		buttonClick = true;
 	}
 
@@ -220,123 +327,75 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 				audio->Stop(1);
 				audio->Play(2, true);
 			}
+			click_button = i;
 			buttonClick = true;
 		}
 	}
 	//backButton at Menu
 	if (button.ifOverlap(7, CPoint(mouse_x, mouse_y)) && page_phase == 1) {
-		page_phase = 0;
-		if (musicPlay) {
-			audio->Stop(1);
-			audio->Stop(2);
-			audio->Play(0, true);
-		}
+		click_button = 7;
 		buttonClick = true;
 	}
 	//pausedButton at Map
 	if (button.ifOverlap(8, CPoint(mouse_x, mouse_y)) && page_phase >= 6) {
-		page_phase = 3;
+		click_button = 8;
 		buttonClick = true;
 	}
 
 	if (button.ifOverlap(9, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
 		//music on/off
-		buttonClick = true;
-		if (musicPlay) {
-			button.isClick(9);
-			audio->Pause();
-			musicPlay = false;
-		}
-		else {
-			button.isClick(9);
-			musicPlay = true;
-		}
-	}
-	if (button.ifOverlap(10, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
-		//effect on/of
-		buttonClick = true;
-		if (effectPlay) {
-			button.isClick(10);
-			effectPlay = false;
-		}
-		else {
-			button.isClick(10);
-			effectPlay = true;
-		}
-	}
-	//backButton at setting
-	if (button.ifOverlap(11, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
-		page_phase = 0;
-		if (musicPlay) {
-			audio->Stop(1);
-			audio->Stop(2);
-			audio->Play(0, true);
-		}
-	
+		click_button = 9;
 		buttonClick = true;
 		
 	}
-	//at paused
-	if (button.ifOverlap(12, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
-		//end
-		page_phase = 1;
-		if (musicPlay) {
-			audio->Stop(0);
-			audio->Stop(2);
-			audio->Play(1, true);
-		}
+	if (button.ifOverlap(10, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
+		//effect on/of
+		click_button = 10;
 		buttonClick = true;
 	}
+	//backButton at setting
+	if (button.ifOverlap(11, CPoint(mouse_x, mouse_y)) && page_phase == 2) {
+		click_button = 11;
+		buttonClick = true;
+	}
+	//endButton at paused
+	if (button.ifOverlap(12, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
+		click_button = 12;
+		buttonClick = true;
+	}
+	//resumeButton at paused
 	if (button.ifOverlap(13, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
-		//resume unwork
+		click_button = 13;
 		buttonClick = true;
 	}
 	if (button.ifOverlap(14, CPoint(mouse_x, mouse_y)) && page_phase == 3) {
-		//skip unwork
+		click_button = 14;
 		buttonClick = true;
 	}
-	//at die
+	//menuButton at die
 	if (button.ifOverlap(15, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
-		//menu
-		page_phase = 1;
-		if (musicPlay) {
-			audio->Stop(0);
-			audio->Stop(2);
-			audio->Play(1, true);
-		}
+		click_button = 15;
 		buttonClick = true;
 	}
+	//retryButton at die
 	if (button.ifOverlap(16, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
-		//retry unwork
+		click_button = 16;
 		buttonClick = true;
-		this->resetLevel(this->page_phase - 3);
-		this->page_phase = 6;
 	}
+	//skipButton at die
 	if (button.ifOverlap(17, CPoint(mouse_x, mouse_y)) && page_phase == 4) {
-		//skip
-		page_phase = 1;
+		click_button = 17;
 		buttonClick = true;
 	}
 	//continueButton at pass
 	if (button.ifOverlap(18, CPoint(mouse_x, mouse_y)) && page_phase == 5) {
-		page_phase = 1;
-		if (musicPlay) {
-			audio->Stop(0);
-			audio->Stop(2);
-			audio->Play(1, true);
-		}
+		click_button = 18;
 		buttonClick = true;
 	}
 
-
-	//Music & Effec
-	if (buttonClick && effectPlay) {
-		audio->Play(5, false);
-		buttonClick = false;
+	if (buttonClick) {
+		button.buttonDown(click_button);
 	}
-
-
-	
 }
 
 // reset level's everything when clicks the button of retry

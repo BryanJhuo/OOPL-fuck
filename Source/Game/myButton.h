@@ -31,7 +31,8 @@ public:
 	}
 	
 
-	void isClick(int num);
+	void buttonDown(int num);
+	void buttonUp(int num);
 
 
 };
