@@ -46,7 +46,8 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 - [ ] 水池的素材圖片需要修改，會穿牆判斷
 
 ### 第三關 [ ]  
-- [ ] 按鈕與拉桿功能還未啟動  
+- [ ] 按鈕還未啟動
+- [ ] 角色不應該穿越升降梯
 
 ### 第四關 [&#10004;]    
 目前沒有Bug
