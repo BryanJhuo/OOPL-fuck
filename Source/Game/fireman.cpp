@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "../Game/fireman.h"
 
-void Fireman::IsMoving(Map &map, Object::MapPole& pole){
-	if (this->IsRightButtonClick && this->isBumpRightWall(map))
+void Fireman::IsMoving(Map &map, Object::MapPole& pole, int page){
+	if (this->IsRightButtonClick && this->isBumpRightWall(map, page))
 		this->moveRight();
-	if (this->IsLeftButtonClick && this->isBumpLeftWall(map))
+	if (this->IsLeftButtonClick && this->isBumpLeftWall(map, page))
 		this->moveLeft();
-	if (this->IsUpButtonClick && this->isBumpHead(map, pole)) {
+	if (this->IsUpButtonClick && this->isBumpHead(map, pole, page)) {
 		if (this->IsTimesUp())
 			this->IsUpButtonClick = false;
 		else{
@@ -61,10 +61,10 @@ bool Fireman::IsTimesUp() {
 		return true;
 }
 
-bool Fireman::isBumpHead(Map &map, Object::MapPole &pole) {
+bool Fireman::isBumpHead(Map &map, Object::MapPole &pole, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
-	bool check_1 = map.getPlaceName(current_X / 35, current_Y / 35) == "Resources/block/block_1.bmp";
+	bool check_1 = map.getPlaceName((current_X + 27) / 35, current_Y / 35, page) == "Resources/block/block_1.bmp";
 	bool check_2 = false;
 	for (int i = 0; i < 2; i++){
 		if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i]) 
@@ -79,27 +79,37 @@ bool Fireman::isBumpHead(Map &map, Object::MapPole &pole) {
 	return true;
 }
 
-bool Fireman::isBumpRightWall(Map &map) {
+bool Fireman::isBumpRightWall(Map &map, int page) {
 	int current_X = this->character.GetLeft() + this->character.GetWidth();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
 		return false;
-	else */if (map.getPlaceName(current_X  / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
+	else */
+	if (map.getPlaceName(current_X  / 35, (current_Y + 70) / 35, page) == "Resources/block/block_1.bmp")
 		return false;
 	return true;
 }
 
-bool Fireman::isBumpLeftWall(Map &map) {
+bool Fireman::isBumpLeftWall(Map &map, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
 		return false;
-	else */if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35) == "Resources/block/block_1.bmp")
+	else */
+	if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35, page) == "Resources/block/block_1.bmp")
 		return false;
 	return true;
 }
 
 void Fireman::resetMap(int map_stage) {
-	if (map_stage == 1)
+	if (map_stage == 1) // level 1
+		this->character.SetTopLeft(38, 877);
+	if (map_stage == 2) // level 2
+		this->character.SetTopLeft(1260, 70);
+	if (map_stage == 3) // level 3
+		this->character.SetTopLeft(910, 735);
+	if (map_stage == 4) // level 4
+		this->character.SetTopLeft(38, 877);
+	if (map_stage == 5) // levle 5
 		this->character.SetTopLeft(38, 877);
 }

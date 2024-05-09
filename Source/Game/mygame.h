@@ -43,6 +43,9 @@
 #include "../Game/myButton.h"
 #include "../Game/myScene.h"
 #include "../Game/myObject.h"
+#include <chrono>
+using clock_type = std::chrono::high_resolution_clock;
+using time_type = std::chrono::duration<double, std::chrono::milliseconds::period>;
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -98,12 +101,13 @@ namespace game_framework {
 		void IsMouseOverlap(int mouse_x, int mouse_y);
 		void TestOverlap(int mouse_x, int mouse_y);
 		void movingPole(int page, int index);
-		void movingPolefromButton(int page, CMovingBitmap &pole);
+		void movingPolefromButton(int page, int mode, CMovingBitmap &pole);
 		void isControllerOverlap(int page, CMovingBitmap &character);
 		void isButtonOverlap(int page, CMovingBitmap& character);
 		void isPoolOverlap(int page, CMovingBitmap& character ,CMovingBitmap &pool);
 		void isDoorOverlap(int page);
 		void isBoxOverlap(int page, CMovingBitmap& character);
+		void isFanOverlap();
 		void isDiamondOverlap(int page);
 		void runOverlap(int page);
 		void resetLevel(int page);
@@ -129,6 +133,8 @@ namespace game_framework {
 		Object::MapDiamond mapDiamond;
 		Object::MapPool mapPool;
 		Object::MapFan mapFan;
+		std::chrono::time_point<clock_type> fireman_cl;
+		std::chrono::time_point<clock_type> watergirl_cl;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

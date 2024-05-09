@@ -24,7 +24,7 @@ void Character::isDropDown(Map &map, Object::MapPole &pole, Object::MapBox& box,
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop() + this->character.GetHeight();
 
-	int distance = this->findClosePlace(map, (current_X + 27) / 35, current_Y / 35, current_Y);
+	int distance = this->findClosePlace(map, (current_X + 27) / 35, current_Y / 35, current_Y, page);
 	// the pole collision
 	if (page == 1) {
 		for (int i = 0; i < 2; i++) {
@@ -41,17 +41,17 @@ void Character::isDropDown(Map &map, Object::MapPole &pole, Object::MapBox& box,
 		this->moveJumpDown();
 }
 
-int Character::findClosePlace(Map &map, int x, int y, int height) {
+int Character::findClosePlace(Map &map, int x, int y, int height, int page) {
 	int ret = height + 3;
-	std::string placeName = map.getPlaceName(x, y);
+	std::string placeName = map.getPlaceName(x, y, page);
 	if (placeName == "Resources/block/block_1.bmp")
-		ret = map.getPlace_Y(x, y);
+		ret = map.getPlace_Y(x, y, page);
 
 	return ret;
 }
 
 
-void Character::IsMoving(Map &map, Object::MapPole& pole) {}
+void Character::IsMoving(Map &map, Object::MapPole& pole, int page) {}
 
 void Character::IsButtonUp(UINT nChar) {}
 
