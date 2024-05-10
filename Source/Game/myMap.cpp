@@ -122,16 +122,46 @@ void Map::showMap(int map_stage) {
 	}
 }
 
-std::string Map::getPlaceName(int x, int y) {
-	return this->mapResource1[y][x].GetImageFileName();
+std::string Map::getPlaceName(int x, int y, int map_stage) {
+	if (map_stage == 1)
+		return this->mapResource1[y][x].GetImageFileName();
+	if (map_stage == 2)
+		return this->mapResource2[y][x].GetImageFileName();
+	if (map_stage == 3)
+		return this->mapResource3[y][x].GetImageFileName();
+	if (map_stage == 4)
+		return this->mapResource4[y][x].GetImageFileName();
+	if (map_stage == 5)
+		return this->mapResource5[y][x].GetImageFileName();
+	return "";
 }
 
-int Map::getPlace_X(int x, int y) {
-	return this->mapResource1[y][x].GetLeft();
+int Map::getPlace_X(int x, int y, int map_stage) {
+	if (map_stage == 1)
+		return this->mapResource1[y][x].GetLeft();
+	if (map_stage == 2)
+		return this->mapResource2[y][x].GetLeft();
+	if (map_stage == 3)
+		return this->mapResource3[y][x].GetLeft();
+	if (map_stage == 4)
+		return this->mapResource4[y][x].GetLeft();
+	if (map_stage == 5)
+		return this->mapResource5[y][x].GetLeft();
+	return 0;
 }
 
-int Map::getPlace_Y(int x, int y) {
-	return this->mapResource1[y][x].GetTop();
+int Map::getPlace_Y(int x, int y, int map_stage) {
+	if (map_stage == 1)
+		return this->mapResource1[y][x].GetTop();
+	if (map_stage == 2)
+		return this->mapResource2[y][x].GetTop();
+	if (map_stage == 3)
+		return this->mapResource3[y][x].GetTop();
+	if (map_stage == 4)
+		return this->mapResource4[y][x].GetTop();
+	if (map_stage == 5)
+		return this->mapResource5[y][x].GetTop();
+	return 0;
 }
 
 /*

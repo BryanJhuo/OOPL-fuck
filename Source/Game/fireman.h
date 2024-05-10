@@ -15,13 +15,13 @@ public:
 	
 	std::chrono::time_point<clock_type> start;
 
-	void IsMoving(Map &map, Object::MapPole& pole);
+	void IsMoving(Map &map, Object::MapPole& pole, int page);
 	void IsButtonUp(UINT);
 	void IsButtonDown(UINT);
 	void resetMap(int map_stage);
-	bool isBumpHead(Map& map, Object::MapPole &pole);
-	bool isBumpRightWall(Map &map);
-	bool isBumpLeftWall(Map &map);
+	bool isBumpHead(Map& map, Object::MapPole &pole, int page);
+	bool isBumpRightWall(Map &map, int page);
+	bool isBumpLeftWall(Map &map, int page);
 	bool IsTimesUp();
 
 };

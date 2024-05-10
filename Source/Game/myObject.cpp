@@ -27,9 +27,9 @@ void Object::MapBox::dropDown(Map &map) {
     int current_Y = this->mapBox.GetTop() + this->mapBox.GetHeight();
     int distance = this->mapBox.GetTop() + this->mapBox.GetHeight() + 3;
 
-    std::string placeName = map.getPlaceName(current_X / 35, current_Y / 35);
+    std::string placeName = map.getPlaceName(current_X / 35, current_Y / 35, 1);
     if (placeName == "Resources/block/block_1.bmp")
-        distance = map.getPlace_Y(current_X / 35, current_Y / 35);
+        distance = map.getPlace_Y(current_X / 35, current_Y / 35, 1);
 
     if (current_Y < distance)
         this->mapBox.SetTopLeft(this->mapBox.GetLeft(), this->mapBox.GetTop() + 7);
@@ -174,12 +174,10 @@ void Object::MapDiamond::showObject(int map_stage) {
         blueDiamond[3].SetTopLeft(680, 115);
 
         for (int i = 0; i < 3; i++) {
-            if (redState[i])
-                redDiamond[i].ShowBitmap();
+            if (redState[i]) redDiamond[i].ShowBitmap();      
         }
         for (int i = 0; i < 4; i++) {
-            if (blueState[i])
-                blueDiamond[i].ShowBitmap();
+            if (blueState[i]) blueDiamond[i].ShowBitmap();
         }
         break;
     }
@@ -204,8 +202,8 @@ void Object::MapDiamond::showObject(int map_stage) {
         blueDiamond[7].SetTopLeft(470, 720);;
 
         for (int i = 0; i < 8; i++) {
-            redDiamond[i].ShowBitmap();
-            blueDiamond[i].ShowBitmap();
+            if (redState[i]) redDiamond[i].ShowBitmap();
+            if (blueState[i]) blueDiamond[i].ShowBitmap();
         }
         break;
     }
@@ -231,8 +229,8 @@ void Object::MapDiamond::showObject(int map_stage) {
         blueDiamond[7].SetTopLeft(960, 620);;
 
         for (int i = 0; i < 8; i++) {
-            redDiamond[i].ShowBitmap();
-            blueDiamond[i].ShowBitmap();
+            if (redState[i]) redDiamond[i].ShowBitmap();
+            if (blueState[i]) blueDiamond[i].ShowBitmap();
         }
         break;
     }
@@ -264,8 +262,8 @@ void Object::MapDiamond::showObject(int map_stage) {
         blueDiamond[10].SetTopLeft(978, 360);
 
         for (int i = 0; i < 11; i++) {
-            redDiamond[i].ShowBitmap();
-            blueDiamond[i].ShowBitmap();
+            if (redState[i]) redDiamond[i].ShowBitmap();
+            if (blueState[i]) blueDiamond[i].ShowBitmap();
         }
         break;
     }
@@ -381,13 +379,7 @@ void Object::MapPole::generateObject() {
     mapPole[13].LoadBitmapByString({ "Resources/object/pole3_purple_1.bmp", "Resources/object/pole3_purple_2.bmp" }, RGB(0, 255, 0));
     mapPole[14].LoadBitmapByString({ "Resources/object/pole3_white_1.bmp", "Resources/object/pole3_white_2.bmp" }, RGB(0, 255, 0));
     mapPole[15].LoadBitmapByString({ "Resources/object/pole3_white_1.bmp", "Resources/object/pole3_white_2.bmp" }, RGB(0, 255, 0));
-    mapPole[16].LoadBitmapByString({ "Resources/object/pole3_green_1.bmp", "Resources/object/pole3_green_2.bmp" });
-
-    for (int i = 0; i < 17; i++) {
-        mapPole[i].SetTopLeft(0, 0);
-    }
-    mapPole[0].SetTopLeft(35, 525);
-    mapPole[1].SetTopLeft(1225, 425);
+    mapPole[16].LoadBitmapByString({ "Resources/object/pole3_green_1.bmp", "Resources/object/pole3_green_2.bmp" });    
 }
 
 void Object::MapPole::showObject(int map_stage) {
@@ -400,16 +392,6 @@ void Object::MapPole::showObject(int map_stage) {
     }
 
     case 3: {
-        mapPole[1].SetTopLeft(107, 560);
-        mapPole[8].SetTopLeft(560, 420);
-        mapPole[4].SetTopLeft(670, 455);
-        mapPole[6].SetTopLeft(670, 595);
-        mapPole[7].SetTopLeft(530, 877);
-        mapPole[11].SetTopLeft(665, 877);
-        mapPole[10].SetTopLeft(700, 140);
-        mapPole[2].SetTopLeft(1157, 280);
-        mapPole[3].SetTopLeft(1155, 700);
-
         mapPole[1].ShowBitmap();
         mapPole[8].ShowBitmap();
         mapPole[4].ShowBitmap();
@@ -424,17 +406,7 @@ void Object::MapPole::showObject(int map_stage) {
     }
 
     case 5: {
-        mapPole[4].SetTopLeft(590, 35);
-        mapPole[5].SetTopLeft(140, 280);
-        mapPole[9].SetTopLeft(420, 420);
-        mapPole[12].SetTopLeft(455, 560);
-        mapPole[6].SetTopLeft(560, 595);
-        mapPole[13].SetTopLeft(175, 840);
-        mapPole[8].SetTopLeft(1260, 280);
-        mapPole[14].SetTopLeft(950, 420);
-        mapPole[7].SetTopLeft(1050, 455);
-        mapPole[15].SetTopLeft(805, 700);
-        mapPole[16].SetTopLeft(1120, 700);
+        
 
         mapPole[4].ShowBitmap();
         mapPole[5].ShowBitmap();
@@ -456,7 +428,31 @@ void Object::MapPole::showObject(int map_stage) {
 void Object::MapPole::resetMap(int map_stage) {
     if (map_stage == 1) {
         mapPole[0].SetTopLeft(35, 525);
-        mapPole[1].SetTopLeft(1225, 425);
+        mapPole[1].SetTopLeft(1225, 385);
+    }
+    if (map_stage == 3) {
+        mapPole[1].SetTopLeft(107, 560);
+        mapPole[8].SetTopLeft(560, 420);
+        mapPole[4].SetTopLeft(670, 455);
+        mapPole[6].SetTopLeft(665, 595);
+        mapPole[7].SetTopLeft(530, 877);
+        mapPole[11].SetTopLeft(665, 877);
+        mapPole[10].SetTopLeft(700, 140);
+        mapPole[2].SetTopLeft(1155, 280);
+        mapPole[3].SetTopLeft(1155, 700);
+    }
+    if (map_stage == 5) {
+        mapPole[4].SetTopLeft(590, 35);
+        mapPole[5].SetTopLeft(140, 280);
+        mapPole[9].SetTopLeft(420, 420);
+        mapPole[12].SetTopLeft(455, 560);
+        mapPole[6].SetTopLeft(560, 595);
+        mapPole[13].SetTopLeft(175, 840);
+        mapPole[8].SetTopLeft(1260, 280);
+        mapPole[14].SetTopLeft(950, 420);
+        mapPole[7].SetTopLeft(1050, 455);
+        mapPole[15].SetTopLeft(805, 700);
+        mapPole[16].SetTopLeft(1120, 700);
     }
 }
 

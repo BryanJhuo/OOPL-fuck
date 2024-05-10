@@ -29,15 +29,14 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	if (this->page_phase == 6){
-		fireman.IsMoving(this->map, this->mapPole);
-		watergirl.IsMoving(this->map, this->mapPole);
+	if (this->page_phase >= 6){
+		fireman.IsMoving(this->map, this->mapPole, this->page_phase - 5);
+		watergirl.IsMoving(this->map, this->mapPole, this->page_phase - 5);
 		if (!fireman.IsUpButtonClick) 
 			this->fireman.isDropDown(this->map, this->mapPole, this->mapBox, page_phase - 5);
 		if (!watergirl.IsWButtonClick) 
 			this->watergirl.isDropDown(this->map, this->mapPole, this->mapBox, page_phase - 5);
 		this->runOverlap(this->page_phase - 5);
-		
 	}
 }
 
@@ -127,7 +126,7 @@ void CGameStateRun::OnLButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 		switch (click_button) {
 			case 0:
 				//plauButton at Home
-				page_phase = 6;
+				page_phase = 1;
 				if (musicPlay) {
 					audio->Stop(0);
 					audio->Stop(1);
@@ -329,6 +328,8 @@ void CGameStateRun::IsMouseOverlap(int mouse_x, int mouse_y) {
 			}
 			click_button = i;
 			buttonClick = true;
+			this->resetLevel(this->page_phase - 5);
+			break; // let stageButton decide once
 		}
 	}
 	//backButton at Menu
@@ -430,23 +431,103 @@ void CGameStateRun::isControllerOverlap(int page, CMovingBitmap& character) {
 		if (this->mapController.controllerState[0]) {
 			this->movingPole(1, 0);
 		}
+	}
 
+	if (page == 3) {
+		for (int i = 0; i < 4; i++) {
+			// overlap from right side (opening controller)
+			if (CMovingBitmap::IsOverlap(character, this->mapController.mapController[i])
+				&& character.GetLeft() < this->mapController.mapController[i].GetLeft()) {
+				this->mapController.mapController[i].SetFrameIndexOfBitmap(1);
+				this->mapController.controllerState[i] = true;
+				this->controllerMode = 1;
+			}
+			// overlap from left side (closing controller)
+			else if (CMovingBitmap::IsOverlap(character, this->mapController.mapController[i])
+				&& character.GetLeft() + 20 > this->mapController.mapController[i].GetLeft() + 38) {
+				this->mapController.mapController[i].SetFrameIndexOfBitmap(0);
+				this->mapController.controllerState[i] = true;
+				this->controllerMode = 2;
+			}
+
+			if (this->mapController.controllerState[i])
+				this->movingPole(3, i);
+		}
 	}
 	
 }
 
 void CGameStateRun::movingPole(int page, int index) {
-	int current_Height = this->mapPole.mapPole[index].GetTop();
-	
-	if (current_Height < 635 && this->controllerMode == 1) {
-		this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height + 10);
+	int current_Height;
+	if (page == 1) {
+		current_Height = this->mapPole.mapPole[index].GetTop();
+
+		if (current_Height < 655 && this->controllerMode == 1) {
+			this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height + 10);
+		}
+		else if (current_Height > 525 && this->controllerMode == 2) {
+			this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height - 10);
+		}
+		else {
+			this->mapController.controllerState[0] = false;
+			this->controllerMode = 0;
+		}
 	}
-	else if (current_Height > 525 && this->controllerMode == 2) {
-		this->mapPole.mapPole[index].SetTopLeft(this->mapPole.mapPole[index].GetLeft(), current_Height - 10);
-	}
-	else { 
-		this->mapController.controllerState[0] = false; 
-		this->controllerMode = 0;
+	if (page == 3) {
+		if (index == 0) { // yellow controller
+			if (this->mapPole.mapPole[10].GetLeft() > 560 && this->controllerMode == 1)
+				this->mapPole.mapPole[10].SetTopLeft(this->mapPole.mapPole[10].GetLeft() - 10, this->mapPole.mapPole[10].GetTop());
+			else if (this->mapPole.mapPole[10].GetLeft() < 700 && this->controllerMode == 2)
+				this->mapPole.mapPole[10].SetTopLeft(this->mapPole.mapPole[10].GetLeft() + 10, this->mapPole.mapPole[10].GetTop());
+			else {
+				this->mapController.controllerState[index] = false;
+				this->controllerMode = 0;
+			}
+		}
+		if (index == 1) { // white controller
+			if (this->mapPole.mapPole[3].GetLeft() > 1015 && this->controllerMode == 1)
+				this->mapPole.mapPole[3].SetTopLeft(this->mapPole.mapPole[3].GetLeft() - 10, this->mapPole.mapPole[3].GetTop());
+			else if (this->mapPole.mapPole[3].GetLeft() < 1155 && this->controllerMode == 2)
+				this->mapPole.mapPole[3].SetTopLeft(this->mapPole.mapPole[3].GetLeft() + 10, this->mapPole.mapPole[3].GetTop());
+			else {
+				this->mapController.controllerState[index] = false;
+				this->controllerMode = 0;
+			}
+		}
+		if (index == 2) { // green controller
+			if (this->mapPole.mapPole[6].GetTop() < 700 && this->controllerMode == 1)
+				this->mapPole.mapPole[6].SetTopLeft(this->mapPole.mapPole[6].GetLeft(), this->mapPole.mapPole[6].GetTop() + 10);
+			else if (this->mapPole.mapPole[6].GetTop() > 595 && this->controllerMode == 2)
+				this->mapPole.mapPole[6].SetTopLeft(this->mapPole.mapPole[6].GetLeft(), this->mapPole.mapPole[6].GetTop() - 10);
+			else {
+				this->mapController.controllerState[index] = false;
+				this->controllerMode = 0;
+			}
+		}
+		if (index == 3) { // purple controller
+			// 因為紫色控制桿與其他方向相反，controllerMode也跟著相反
+			if (this->controllerMode == 2) { // closing
+				if (this->mapPole.mapPole[2].GetLeft() > 1015) // No. 2
+					this->mapPole.mapPole[2].SetTopLeft(this->mapPole.mapPole[2].GetLeft() - 10, this->mapPole.mapPole[2].GetTop());
+				if (this->mapPole.mapPole[7].GetLeft() < 665)  // No. 7
+					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() + 10, this->mapPole.mapPole[7].GetTop());
+				if (this->mapPole.mapPole[11].GetLeft() < 805) // No. 11
+					this->mapPole.mapPole[11].SetTopLeft(this->mapPole.mapPole[11].GetLeft() + 10, this->mapPole.mapPole[11].GetTop());
+			}
+			else if (this->controllerMode == 1) { // opening
+				if (this->mapPole.mapPole[2].GetLeft() < 1155) // No. 2
+					this->mapPole.mapPole[2].SetTopLeft(this->mapPole.mapPole[2].GetLeft() + 10, this->mapPole.mapPole[2].GetTop());
+				if (this->mapPole.mapPole[7].GetLeft() > 530)  // No. 7
+					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() - 10, this->mapPole.mapPole[7].GetTop());
+				if (this->mapPole.mapPole[11].GetLeft() > 665) // No. 11
+					this->mapPole.mapPole[11].SetTopLeft(this->mapPole.mapPole[11].GetLeft() - 10, this->mapPole.mapPole[11].GetTop());
+
+			}
+			else {
+				this->mapController.controllerState[index] = false;
+				this->controllerMode = 0;
+			}
+		}
 	}
 
 	if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapPole.mapPole[index]))
@@ -458,52 +539,49 @@ void CGameStateRun::movingPole(int page, int index) {
 void CGameStateRun::isButtonOverlap(int page, CMovingBitmap& character) {
 	if (page == 1) {
 		// Button Up
-		if (CMovingBitmap::IsOverlap(character, this->mapButton.mapButton[0])) {
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[0]) || CMovingBitmap::IsOverlap(this->watergirl.character, this->mapButton.mapButton[0])) {
 			this->mapButton.mapButton[0].SetFrameIndexOfBitmap(1);
 			this->mapButton.buttonState[0] = true;
-			this->buttonMode[0] = 1;
-		}
-		else if (CMovingBitmap::IsOverlap(character, this->mapButton.mapButton[1])) {
-			this->mapButton.mapButton[1].SetFrameIndexOfBitmap(1);
-			this->mapButton.buttonState[1] = true;
-			this->buttonMode[1] = 1;
 		}
 		else {
 			this->mapButton.mapButton[0].SetFrameIndexOfBitmap(0);
 			this->mapButton.buttonState[0] = false;
-			this->buttonMode[0] = 2;
+		}
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[1]) || CMovingBitmap::IsOverlap(this->watergirl.character, this->mapButton.mapButton[1])) {
+			this->mapButton.mapButton[1].SetFrameIndexOfBitmap(1);
+			this->mapButton.buttonState[1] = true;
+		}
+		else {
 			this->mapButton.mapButton[1].SetFrameIndexOfBitmap(0);
 			this->mapButton.buttonState[1] = false;
-			this->buttonMode[1] = 2;
 		}
-		this->movingPolefromButton(1, this->mapPole.mapPole[1]);
+		if (this->mapButton.buttonState[0] || this->mapButton.buttonState[1])
+			this->movingPolefromButton(1, 1, this->mapPole.mapPole[1]);
+		else
+			this->movingPolefromButton(1, 0, this->mapPole.mapPole[1]);
 	}
 }
 
-void CGameStateRun::movingPolefromButton(int page, CMovingBitmap &pole) {
+void CGameStateRun::movingPolefromButton(int page, int mode, CMovingBitmap &pole) {
 	int current_Height = pole.GetTop();
+	bool up = false;
 
-	if (current_Height < 525 && (this->buttonMode[0] == 1 || this->buttonMode[1] == 1)) {
+	if (mode == 1 && current_Height < 525) {
 		pole.SetTopLeft(pole.GetLeft(), current_Height + 10);
 	}
-	else if (current_Height > 425 && (this->buttonMode[0] == 2 || this->buttonMode[1] == 2)) {
+	if (mode == 0 && current_Height > 385) {
 		pole.SetTopLeft(pole.GetLeft(), current_Height - 10);
+		up = true;
 	}
-	else {
-		this->buttonMode[0] = 0;
-		this->buttonMode[1] = 0;
-	}
-	if (CMovingBitmap::IsOverlap(this->fireman.character, pole))
+	if (CMovingBitmap::IsOverlap(this->fireman.character, pole) && up)
 		this->fireman.character.SetTopLeft(this->fireman.character.GetLeft(), pole.GetTop() - 100);
-	if (CMovingBitmap::IsOverlap(this->watergirl.character, pole))
+	if (CMovingBitmap::IsOverlap(this->watergirl.character, pole) && up)
 		this->watergirl.character.SetTopLeft(this->watergirl.character.GetLeft(), pole.GetTop() - 100);
 }
 
 void CGameStateRun::isPoolOverlap(int page, CMovingBitmap& character, CMovingBitmap& pool) {
-	if (page == 1) {
-		if (CMovingBitmap::IsOverlap(character, pool)) 
-			this->page_phase = 4;
-	}
+	if (CMovingBitmap::IsOverlap(character, pool)) 
+		this->page_phase = 4;
 }
 
 void CGameStateRun::isDoorOverlap(int page) {
@@ -550,34 +628,60 @@ void CGameStateRun::isBoxOverlap(int page, CMovingBitmap& character) {
 }
 
 void CGameStateRun::isDiamondOverlap(int page) {
-	if (page == 1) {
-		// red
-		for (int i = 0; i < 3; i++) {
-			if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapDiamond.redDiamond[i]))
-				this->mapDiamond.redState[i] = false;
-		}
-
-		for (int i = 0; i < 4; i++) {
-			if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDiamond.blueDiamond[i]))
-				this->mapDiamond.blueState[i] = false;
-		}
+	// red
+	for (int i = 0; i < 11; i++) {
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapDiamond.redDiamond[i]))
+			this->mapDiamond.redState[i] = false;
+	}
+	// blue
+	for (int i = 0; i < 11; i++) {
+		if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDiamond.blueDiamond[i]))
+			this->mapDiamond.blueState[i] = false;
 	}
 }
 
+void CGameStateRun::isFanOverlap() {
+	for (int i = 0; i < 2; i++) {
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapFan.mapFan[i]))
+			this->fireman_cl = clock_type::now();
+		if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapFan.mapFan[i]))
+			this->watergirl_cl = clock_type::now();
+	}
+	if (std::chrono::duration_cast<time_type>(clock_type::now() - this->fireman_cl).count() < 1500
+		&& this->fireman.character.GetTop() > 60 && this->fireman.character.GetLeft() > 1210)
+		this->fireman.character.SetTopLeft(this->fireman.character.GetLeft(), this->fireman.character.GetTop() - 15);
+	
+	if (std::chrono::duration_cast<time_type>(clock_type::now() - this->watergirl_cl).count() < 1500
+		&& this->watergirl.character.GetTop() > 60 && this->watergirl.character.GetLeft() < 184 )
+		this->watergirl.character.SetTopLeft(this->watergirl.character.GetLeft(), this->watergirl.character.GetTop() - 15);
+}
+
 void CGameStateRun::runOverlap(int page) {
-	if (page == 1){
-		this->isControllerOverlap(this->page_phase - 5, this->fireman.character);
-		this->isControllerOverlap(this->page_phase - 5, this->watergirl.character);
-		//this->isButtonOverlap(this->page_phase - 5, this->fireman.character);
-		this->isButtonOverlap(this->page_phase - 5, this->watergirl.character);
-		this->isDoorOverlap(this->page_phase - 5);
-		this->isDiamondOverlap(this->page_phase - 5);
+	this->isControllerOverlap(this->page_phase - 5, this->fireman.character);
+	this->isControllerOverlap(this->page_phase - 5, this->watergirl.character);
+	this->isDoorOverlap(this->page_phase - 5);
+	this->isDiamondOverlap(this->page_phase - 5);
+	this->isButtonOverlap(this->page_phase - 5, this->fireman.character);
+	
+	if (page == 1) {
 		this->isBoxOverlap(this->page_phase - 5, this->fireman.character);
 		this->isBoxOverlap(this->page_phase - 5, this->watergirl.character);
 		this->isPoolOverlap(this->page_phase - 5, this->fireman.character, this->mapPool.greenPool);
 		this->isPoolOverlap(this->page_phase - 5, this->fireman.character, this->mapPool.bluePool[0]);
 		this->isPoolOverlap(this->page_phase - 5, this->watergirl.character, this->mapPool.redPool[0]);
 		this->isPoolOverlap(this->page_phase - 5, this->watergirl.character, this->mapPool.greenPool);
-		
+	}
+	if (page == 2) {
+		for (int i = 1; i < 5; i++) {
+			this->isPoolOverlap(this->page_phase - 5, this->fireman.character, this->mapPool.bluePool[i]);
+			this->isPoolOverlap(this->page_phase - 5, this->watergirl.character, this->mapPool.redPool[i]);
+		}
+	}
+	if (page == 4) {
+		for (int i = 5; i < 8; i++) {
+			this->isPoolOverlap(this->page_phase - 5, this->fireman.character, this->mapPool.bluePool[i]);
+			this->isPoolOverlap(this->page_phase - 5, this->watergirl.character, this->mapPool.redPool[i]);
+		}
+		this->isFanOverlap();
 	}
 }
