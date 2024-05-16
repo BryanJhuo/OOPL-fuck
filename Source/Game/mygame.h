@@ -101,7 +101,7 @@ namespace game_framework {
 		void IsMouseOverlap(int mouse_x, int mouse_y);
 		void TestOverlap(int mouse_x, int mouse_y);
 		void movingPole(int page, int index);
-		void movingPolefromButton(int page, int mode, CMovingBitmap &pole);
+		void movingPolefromButton(int page, int mode, int index, CMovingBitmap &pole);
 		void isControllerOverlap(int page, CMovingBitmap &character);
 		void isButtonOverlap(int page, CMovingBitmap& character);
 		void isPoolOverlap(int page, CMovingBitmap& character ,CMovingBitmap &pool);
@@ -114,12 +114,14 @@ namespace game_framework {
 	private:
 		int page_phase = 0;		 //page select {home:0, menu:1, map1:2, map2:3, ...}
 		int controllerMode = 0; // 0: close 1: up 2: down
+		int ctrlMode[6] = { 0, 0, 0, 0, 0, 0 };
 		int buttonMode[3] = {0, 0, 0}; // 0: close 1: up 2: down
 		int last_stage = 1;
 		int click_button = 0;
 		bool buttonClick = false;
 		bool musicPlay = true;
 		bool effectPlay = true;
+		int invincible = 0; // µL¼Ä
 		Fireman fireman;
 		Watergirl watergirl;
 		Map map;
@@ -135,6 +137,7 @@ namespace game_framework {
 		Object::MapFan mapFan;
 		std::chrono::time_point<clock_type> fireman_cl;
 		std::chrono::time_point<clock_type> watergirl_cl;
+		CMovingBitmap wind[2];
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

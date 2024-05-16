@@ -431,7 +431,7 @@ void Object::MapPole::resetMap(int map_stage) {
         mapPole[1].SetTopLeft(1225, 385);
     }
     if (map_stage == 3) {
-        mapPole[1].SetTopLeft(107, 560);
+        mapPole[1].SetTopLeft(105, 560);
         mapPole[8].SetTopLeft(560, 420);
         mapPole[4].SetTopLeft(670, 455);
         mapPole[6].SetTopLeft(665, 595);
@@ -442,10 +442,10 @@ void Object::MapPole::resetMap(int map_stage) {
         mapPole[3].SetTopLeft(1155, 700);
     }
     if (map_stage == 5) {
-        mapPole[4].SetTopLeft(590, 35);
+        mapPole[4].SetTopLeft(598, 35);
         mapPole[5].SetTopLeft(140, 280);
         mapPole[9].SetTopLeft(420, 420);
-        mapPole[12].SetTopLeft(455, 560);
+        mapPole[12].SetTopLeft(420, 560);
         mapPole[6].SetTopLeft(560, 595);
         mapPole[13].SetTopLeft(175, 840);
         mapPole[8].SetTopLeft(1260, 280);
