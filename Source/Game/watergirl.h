@@ -21,8 +21,8 @@ public:
 	void IsButtonDown(UINT);
 	void resetMap(int map_stage);
 	bool isBumpHead(Map &map, Object::MapPole& pole, int page);
-	bool isBumpRightWall(Map &map, int page);
-	bool isBumpLeftWall(Map &map, int page);
+	bool isBumpRightWall(Map &map, Object::MapPole& pole, int page);
+	bool isBumpLeftWall(Map &map, Object::MapPole& pole, int page);
 
 	bool IsTimesUp();
 };

@@ -2,9 +2,9 @@
 #include "../Game/fireman.h"
 
 void Fireman::IsMoving(Map &map, Object::MapPole& pole, int page){
-	if (this->IsRightButtonClick && this->isBumpRightWall(map, page))
+	if (this->IsRightButtonClick && this->isBumpRightWall(map, pole, page))
 		this->moveRight();
-	if (this->IsLeftButtonClick && this->isBumpLeftWall(map, page))
+	if (this->IsLeftButtonClick && this->isBumpLeftWall(map, pole, page))
 		this->moveLeft();
 	if (this->IsUpButtonClick && this->isBumpHead(map, pole, page)) {
 		if (this->IsTimesUp())
@@ -79,7 +79,7 @@ bool Fireman::isBumpHead(Map &map, Object::MapPole &pole, int page) {
 	return true;
 }
 
-bool Fireman::isBumpRightWall(Map &map, int page) {
+bool Fireman::isBumpRightWall(Map &map, Object::MapPole& pole, int page) {
 	int current_X = this->character.GetLeft() + this->character.GetWidth();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
@@ -87,10 +87,32 @@ bool Fireman::isBumpRightWall(Map &map, int page) {
 	else */
 	if (map.getPlaceName(current_X  / 35, (current_Y + 70) / 35, page) == "Resources/block/block_1.bmp")
 		return false;
+	if (page == 1) {
+		for (int i = 0; i < 2; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetLeft() < pole.mapPole[i].GetLeft()
+				&& (this->character.GetTop() + this->character.GetHeight()) > (pole.mapPole[i].GetTop() + (pole.mapPole[i].GetHeight() / 2)))
+				return false;
+		}
+	}
+	if (page == 3) {
+		for (int i = 1; i < 12; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetLeft() < pole.mapPole[i].GetLeft())
+				return false;
+		}
+	}
+	if (page == 5) {
+		for (int i = 4; i < 17; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetLeft() < pole.mapPole[i].GetLeft())
+				return false;
+		}
+	}
 	return true;
 }
 
-bool Fireman::isBumpLeftWall(Map &map, int page) {
+bool Fireman::isBumpLeftWall(Map &map, Object::MapPole& pole, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
 	/*if (map.getPlaceName(current_X / 35, (current_Y + 35) / 35) == "Resources/block/block_1.bmp")
@@ -98,6 +120,28 @@ bool Fireman::isBumpLeftWall(Map &map, int page) {
 	else */
 	if (map.getPlaceName(current_X / 35, (current_Y + 70) / 35, page) == "Resources/block/block_1.bmp")
 		return false;
+	if (page == 1) {
+		for (int i = 0; i < 2; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i]) 
+				&& this->character.GetLeft() > pole.mapPole[i].GetLeft() 
+				&& (this->character.GetTop() + this->character.GetHeight()) > (pole.mapPole[i].GetTop() + (pole.mapPole[i].GetHeight()/ 2)))
+				return false;
+		}
+	}
+	if (page == 3) {
+		for (int i = 1; i < 12; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetLeft() > pole.mapPole[i].GetLeft())
+				return false;
+		}
+	}
+	if (page == 5) {
+		for (int i = 4; i < 17; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetLeft() > pole.mapPole[i].GetLeft())
+				return false;
+		}
+	}
 	return true;
 }
 
