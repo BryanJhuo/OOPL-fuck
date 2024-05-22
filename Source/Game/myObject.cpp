@@ -393,30 +393,28 @@ void Object::MapPole::showObject(int map_stage) {
 
     case 3: {
         mapPole[1].ShowBitmap();
-        mapPole[8].ShowBitmap();
+        mapPole[2].ShowBitmap();
+        mapPole[3].ShowBitmap();
         mapPole[4].ShowBitmap();
         mapPole[6].ShowBitmap();
         mapPole[7].ShowBitmap();
-        mapPole[11].ShowBitmap();
+        mapPole[8].ShowBitmap();
         mapPole[10].ShowBitmap();
-        mapPole[2].ShowBitmap();
-        mapPole[3].ShowBitmap();
+        mapPole[11].ShowBitmap();
 
         break;
     }
 
     case 5: {
-        
-
         mapPole[4].ShowBitmap();
         mapPole[5].ShowBitmap();
+        mapPole[6].ShowBitmap();
+        mapPole[7].ShowBitmap();
+        mapPole[8].ShowBitmap();
         mapPole[9].ShowBitmap();
         mapPole[12].ShowBitmap();
-        mapPole[6].ShowBitmap();
         mapPole[13].ShowBitmap();
-        mapPole[8].ShowBitmap();
-        mapPole[14].ShowBitmap();
-        mapPole[7].ShowBitmap();
+        mapPole[14].ShowBitmap();       
         mapPole[15].ShowBitmap();
         mapPole[16].ShowBitmap();
 

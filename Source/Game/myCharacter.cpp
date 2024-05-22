@@ -36,6 +36,23 @@ void Character::isDropDown(Map &map, Object::MapPole &pole, Object::MapBox& box,
 			&& this->character.GetTop() < box.mapBox.GetTop())
 			distance = box.mapBox.GetTop();
 	}
+	if (page == 3) {
+		for (int i = 1; i < 12; i++) {
+			if (i == 5 || i == 9) continue;
+			if (game_framework::CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() < pole.mapPole[i].GetTop())
+				distance = pole.mapPole[i].GetTop();
+		}
+	}
+	if (page == 5) {
+		for (int i = 4; i < 17; i++) {
+			if (i == 10 || i == 11) continue;
+			if (game_framework::CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() < pole.mapPole[i].GetTop())
+				distance = pole.mapPole[i].GetTop();
+		}
+	}
+
 	// drop down to the distance
 	if (current_Y < distance)
 		this->moveJumpDown();
