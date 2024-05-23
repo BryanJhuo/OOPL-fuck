@@ -138,7 +138,6 @@ namespace game_framework {
 		std::chrono::time_point<clock_type> fireman_cl;
 		std::chrono::time_point<clock_type> watergirl_cl;
 		CMovingBitmap wind[2];
-		CMovingBitmap ctrl_combobox;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

@@ -41,6 +41,7 @@ namespace Object {
     class MapController final : public Object {
     public:
         CMovingBitmap mapController[6];
+        CMovingBitmap comboBox[6];
         bool controllerState[6];
         void generateObject();
         void showObject(int map_stage);

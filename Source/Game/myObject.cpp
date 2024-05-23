@@ -102,6 +102,7 @@ void Object::MapController::generateObject() {
 
 
     for (int i = 0; i < 6; i++) {
+        this->comboBox[i].LoadBitmapByString({ "Resources/object/55green.bmp" });
         mapController[i].SetTopLeft(0, 0);
         controllerState[i] = false;
     }
@@ -111,30 +112,45 @@ void Object::MapController::showObject(int map_stage) {
     switch (map_stage) {
     case 1: {
         mapController[0].SetTopLeft(280, 650);
+        comboBox[0].SetTopLeft(280 + 35, 700);
         mapController[0].ShowBitmap();
+        comboBox[0].ShowBitmap();
         break;
     }
     case 3: {
-        mapController[0].SetTopLeft(380, 350);
-        mapController[1].SetTopLeft(70, 775);
-        mapController[2].SetTopLeft(70, 910);
-        mapController[3].SetTopLeft(1230, 910);
+        mapController[0].SetTopLeft(380, 370);
+        mapController[1].SetTopLeft(70, 790);
+        mapController[2].SetTopLeft(70, 930);
+        mapController[3].SetTopLeft(1230, 930);
+
+        comboBox[0].SetTopLeft(380 + 35, 420);
+        comboBox[1].SetTopLeft(70 + 35, 840);
+        comboBox[2].SetTopLeft(70 + 35, 980);
+        comboBox[3].SetTopLeft(1230 + 35, 980);
 
         for (int i = 0; i < 4; i++) {
             mapController[i].ShowBitmap();
+            comboBox[i].ShowBitmap();
         }
 
         break;
     }
     case 5: {
-        mapController[5].SetTopLeft(315, 210);
-        mapController[3].SetTopLeft(700, 133);
-        mapController[2].SetTopLeft(835, 98);
-        mapController[1].SetTopLeft(995, 133);
-        mapController[4].SetTopLeft(1260, 640);
+        mapController[5].SetTopLeft(315, 230);
+        mapController[3].SetTopLeft(700, 158);
+        mapController[2].SetTopLeft(835, 125);
+        mapController[1].SetTopLeft(995, 160);
+        mapController[4].SetTopLeft(1260, 650);
+
+        comboBox[1].SetTopLeft(995 + 35, 210);
+        comboBox[2].SetTopLeft(835 + 35, 175);
+        comboBox[3].SetTopLeft(700 + 35, 210);
+        comboBox[4].SetTopLeft(1260 + 35, 700);
+        comboBox[5].SetTopLeft(315 + 35, 280);
 
         for (int i = 1; i < 6; i++) {
             mapController[i].ShowBitmap();
+            comboBox[i].ShowBitmap();
         }
 
         break;
