@@ -454,7 +454,7 @@ void CGameStateRun::isControllerOverlap(int page, CMovingBitmap& character) {
 		}
 
 		if (this->mapController.controllerState[0]) {
-			this->movingPole(1, 0);
+			this->movingPole(1, 0, character);
 		}
 	}
 
@@ -484,7 +484,7 @@ void CGameStateRun::isControllerOverlap(int page, CMovingBitmap& character) {
 				}
 			}
 			if (this->mapController.controllerState[i])
-				this->movingPole(3, i);
+				this->movingPole(3, i, character);
 		}
 	}
 
@@ -518,13 +518,13 @@ void CGameStateRun::isControllerOverlap(int page, CMovingBitmap& character) {
 				}
 			}
 			if (this->mapController.controllerState[i])
-				this->movingPole(5, i);
+				this->movingPole(5, i, character);
 		}
 	}
 	
 }
 
-void CGameStateRun::movingPole(int page, int index) {
+void CGameStateRun::movingPole(int page, int index, CMovingBitmap &character) {
 	int current_Height;
 	if (page == 1) {
 		current_Height = this->mapPole.mapPole[index].GetTop();
@@ -574,17 +574,32 @@ void CGameStateRun::movingPole(int page, int index) {
 		if (index == 3) { // purple controller
 			// 因為紫色控制桿與其他方向相反，controllerMode也跟著相反
 			if (this->controllerMode == 2) { // closing
-				if (this->mapPole.mapPole[7].GetLeft() < 665)  // No. 7
+				if (this->mapPole.mapPole[7].GetLeft() < 665) {  // No. 7
 					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() + 3, this->mapPole.mapPole[7].GetTop());
-				if (this->mapPole.mapPole[11].GetLeft() < 805) // No. 11
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[7]))
+						character.SetTopLeft(this->mapPole.mapPole[7].GetLeft() + this->mapPole.mapPole[7].GetWidth(), character.GetTop());
+				}
+				if (this->mapPole.mapPole[11].GetLeft() < 805) { // No. 11
 					this->mapPole.mapPole[11].SetTopLeft(this->mapPole.mapPole[11].GetLeft() + 3, this->mapPole.mapPole[11].GetTop());
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[11]))
+						character.SetTopLeft(this->mapPole.mapPole[11].GetLeft() + this->mapPole.mapPole[11].GetWidth(), character.GetTop());
+				}
 			}
 			else if (this->controllerMode == 1) { // opening
-				if (this->mapPole.mapPole[7].GetLeft() > 530)  // No. 7
+				if (this->mapPole.mapPole[7].GetLeft() > 530) {  // No. 7
 					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() - 3, this->mapPole.mapPole[7].GetTop());
-				if (this->mapPole.mapPole[11].GetLeft() > 665) // No. 11
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[7]))
+						character.SetTopLeft(this->mapPole.mapPole[7].GetLeft() - character.GetWidth(), character.GetTop());
+				}
+				if (this->mapPole.mapPole[11].GetLeft() > 665) { // No. 11
 					this->mapPole.mapPole[11].SetTopLeft(this->mapPole.mapPole[11].GetLeft() - 3, this->mapPole.mapPole[11].GetTop());
-
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[11]))
+						character.SetTopLeft(this->mapPole.mapPole[11].GetLeft() - character.GetWidth(), character.GetTop());
+				}
 			}
 			else {
 				this->mapController.controllerState[index] = false;
@@ -650,14 +665,22 @@ void CGameStateRun::movingPole(int page, int index) {
 		}
 		if (index == 3) { // purple controller
 			if (this->ctrlMode[index] == 1) { // opening
-				if (this->mapPole.mapPole[7].GetLeft() > 770)
+				if (this->mapPole.mapPole[7].GetLeft() > 770){
 					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() - 3, this->mapPole.mapPole[7].GetTop());
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[7]))
+						character.SetTopLeft(this->mapPole.mapPole[7].GetLeft() - character.GetWidth(), character.GetTop());
+				}
 				if (this->mapPole.mapPole[13].GetLeft() < 315)
 					this->mapPole.mapPole[13].SetTopLeft(this->mapPole.mapPole[13].GetLeft() + 3, this->mapPole.mapPole[13].GetTop());
 			}
 			else if (this->ctrlMode[index] == 2) { // closing
-				if (this->mapPole.mapPole[7].GetLeft() < 1050)
+				if (this->mapPole.mapPole[7].GetLeft() < 1050){
 					this->mapPole.mapPole[7].SetTopLeft(this->mapPole.mapPole[7].GetLeft() + 3, this->mapPole.mapPole[7].GetTop());
+					// 角色在升降梯移動時，會被推走
+					if (CMovingBitmap::IsOverlap(character, this->mapPole.mapPole[7]))
+						character.SetTopLeft(this->mapPole.mapPole[7].GetLeft() + this->mapPole.mapPole[7].GetWidth(), character.GetTop());
+				}
 				if (this->mapPole.mapPole[13].GetLeft() > 175)
 					this->mapPole.mapPole[13].SetTopLeft(this->mapPole.mapPole[13].GetLeft() - 3, this->mapPole.mapPole[13].GetTop());
 			}

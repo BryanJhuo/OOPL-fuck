@@ -100,7 +100,7 @@ namespace game_framework {
 		void ShowWindowCoordinate();
 		void IsMouseOverlap(int mouse_x, int mouse_y);
 		void TestOverlap(int mouse_x, int mouse_y);
-		void movingPole(int page, int index);
+		void movingPole(int page, int index, CMovingBitmap &character);
 		void movingPolefromButton(int page, int mode, int index, CMovingBitmap &pole);
 		void isControllerOverlap(int page, CMovingBitmap &character);
 		void isButtonOverlap(int page, CMovingBitmap& character);
