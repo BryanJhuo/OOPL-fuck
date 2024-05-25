@@ -68,7 +68,33 @@ bool Watergirl::IsTimesUp() {
 bool Watergirl::isBumpHead(Map& map, Object::MapPole& pole, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
-	if (map.getPlaceName((current_X + 27) / 35, current_Y / 35, page) == "Resources/block/block_1.bmp") {
+	bool check_1 = map.getPlaceName((current_X + 27) / 35, current_Y / 35, page) == "Resources/block/block_1.bmp";
+	bool check_2 = false;
+	if (page == 1) {
+		for (int i = 0; i < 2; i++) {
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() > pole.mapPole[i].GetTop())
+				check_2 = true;
+		}
+	}
+	if (page == 3) {
+		for (int i = 1; i < 12; i++) {
+			if (i == 5 || i == 9) continue;
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() > pole.mapPole[i].GetTop())
+				check_2 = true;
+		}
+	}
+	if (page == 5) {
+		for (int i = 4; i < 17; i++) {
+			if (i == 10 || i == 11) continue;
+			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
+				&& this->character.GetTop() > pole.mapPole[i].GetTop())
+				check_2 = true;
+		}
+	}
+
+	if (check_1 || check_2){
 		this->IsWButtonClick = false;
 		return false;
 	}
@@ -93,6 +119,7 @@ bool Watergirl::isBumpRightWall(Map& map, Object::MapPole& pole, int page) {
 	}
 	if (page == 3) {
 		for (int i = 1; i < 12; i++) {
+			if (i == 5 || i == 9) continue;
 			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
 				&& this->character.GetLeft() < pole.mapPole[i].GetLeft())
 				return false;
@@ -100,6 +127,7 @@ bool Watergirl::isBumpRightWall(Map& map, Object::MapPole& pole, int page) {
 	}
 	if (page == 5) {
 		for (int i = 4; i < 17; i++) {
+			if (i == 10 || i == 11) continue;
 			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
 				&& this->character.GetLeft() < pole.mapPole[i].GetLeft())
 				return false;
@@ -126,6 +154,7 @@ bool Watergirl::isBumpLeftWall(Map& map, Object::MapPole& pole, int page) {
 	}
 	if (page == 3) {
 		for (int i = 1; i < 12; i++) {
+			if (i == 5 || i == 9) continue;
 			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
 				&& this->character.GetLeft() > pole.mapPole[i].GetLeft())
 				return false;
@@ -133,6 +162,7 @@ bool Watergirl::isBumpLeftWall(Map& map, Object::MapPole& pole, int page) {
 	}
 	if (page == 5) {
 		for (int i = 4; i < 17; i++) {
+			if (i == 10 || i == 11) continue;
 			if (CMovingBitmap::IsOverlap(this->character, pole.mapPole[i])
 				&& this->character.GetLeft() > pole.mapPole[i].GetLeft())
 				return false;
