@@ -75,3 +75,5 @@ void Character::IsButtonUp(UINT nChar) {}
 void Character::IsButtonDown(UINT nChar) {}
 
 void Character::resetMap(int map_stage) {}
+
+void Character::SetFrame() {}
