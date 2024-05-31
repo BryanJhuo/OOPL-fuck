@@ -31,8 +31,8 @@ namespace Object {
 
     class MapButton final : public Object {
     public:
-        CMovingBitmap mapButton[4];
-        bool buttonState[4];
+        CMovingBitmap mapButton[5];
+        bool buttonState[5];
         void generateObject();
         void showObject(int map_stage);
         void resetMap(int map_stage);

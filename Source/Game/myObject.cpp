@@ -54,8 +54,9 @@ void Object::MapButton::generateObject() {
     }
     mapButton[2].LoadBitmapByString({ "Resources/object/button_blue_1.bmp", "Resources/object/button_blue_3.bmp" }, RGB(0, 255, 0));
     mapButton[3].LoadBitmapByString({ "Resources/object/button_red_1.bmp", "Resources/object/button_red_3.bmp" }, RGB(0, 255, 0));
+	mapButton[4].LoadBitmapByString({ "Resources/object/button_red_1.bmp", "Resources/object/button_red_3.bmp" }, RGB(0, 255, 0));
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         mapButton[i].SetTopLeft(0, 0);
         buttonState[i] = false;
     }
@@ -75,10 +76,11 @@ void Object::MapButton::showObject(int map_stage) {
         mapButton[2].SetTopLeft(70, 665);
         mapButton[0].SetTopLeft(915, 103);
         mapButton[3].SetTopLeft(560, 665);
-
+		mapButton[4].SetTopLeft(945, 525);
         mapButton[2].ShowBitmap();
         mapButton[0].ShowBitmap();
         mapButton[3].ShowBitmap();
+		mapButton[4].ShowBitmap();
         break;
     }
 
@@ -118,12 +120,12 @@ void Object::MapController::showObject(int map_stage) {
         break;
     }
     case 3: {
-        mapController[0].SetTopLeft(380, 370);
+        mapController[0].SetTopLeft(40, 370);
         mapController[1].SetTopLeft(70, 790);
         mapController[2].SetTopLeft(70, 930);
         mapController[3].SetTopLeft(1230, 930);
 
-        comboBox[0].SetTopLeft(380 + 35, 420);
+        comboBox[0].SetTopLeft(40 + 35, 420);
         comboBox[1].SetTopLeft(70 + 35, 840);
         comboBox[2].SetTopLeft(70 + 35, 980);
         comboBox[3].SetTopLeft(1230 + 35, 980);

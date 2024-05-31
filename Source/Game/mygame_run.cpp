@@ -784,7 +784,7 @@ void CGameStateRun::isButtonOverlap(int page, CMovingBitmap& character) {
 	}
 	
 	if (page == 3) {
-		// index: 0, 2, 3
+		// index: 0, 2, 3, 4
 		// button 0
 		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[0]) || CMovingBitmap::IsOverlap(this->watergirl.character, this->mapButton.mapButton[0])) {
 			this->mapButton.mapButton[0].SetFrameIndexOfBitmap(1);
@@ -812,19 +812,30 @@ void CGameStateRun::isButtonOverlap(int page, CMovingBitmap& character) {
 			this->mapButton.mapButton[3].SetFrameIndexOfBitmap(0);
 			this->mapButton.buttonState[3] = false;
 		}
+		// button 4
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapButton.mapButton[4]) || CMovingBitmap::IsOverlap(this->watergirl.character, this->mapButton.mapButton[4])) {
+			this->mapButton.mapButton[4].SetFrameIndexOfBitmap(1);
+			this->mapButton.buttonState[4] = true;
+		}
+		else {
+			this->mapButton.mapButton[4].SetFrameIndexOfBitmap(0);
+			this->mapButton.buttonState[4] = false;
+		}
 		// pole moving
 		// button0 to pole2
 		if (this->mapButton.buttonState[0])
 			this->movingPolefromButton(3, 1, 2, this->mapPole.mapPole[2]);
 		else
 			this->movingPolefromButton(3, 0, 2, this->mapPole.mapPole[2]);
+
 		// button2 to pole4
 		if (this->mapButton.buttonState[2])
 			this->movingPolefromButton(3, 1, 4, this->mapPole.mapPole[4]);
 		else
 			this->movingPolefromButton(3, 0, 4, this->mapPole.mapPole[4]);
+
 		// button3 to pole1&8
-		if (this->mapButton.buttonState[3]) {
+		if (this->mapButton.buttonState[3] || this->mapButton.buttonState[4]) {
 			this->movingPolefromButton(3, 1, 1, this->mapPole.mapPole[1]);
 			this->movingPolefromButton(3, 1, 8, this->mapPole.mapPole[8]);
 		}
