@@ -60,9 +60,18 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	*/
 	button.loadButton();
 
-	fireman.character.LoadBitmapByString({ "Resources/characters/fireman_front_1.bmp" }, RGB(0, 255, 0));
+	fireman.character.LoadBitmapByString({ "Resources/characters/fireman_front_1.bmp", "Resources/characters/fireman_front_2.bmp", "Resources/characters/fireman_front_3.bmp",
+										"Resources/characters/fireman_front_4.bmp", "Resources/characters/fireman_front_5.bmp", "Resources/characters/fireman_left_1.bmp",
+										"Resources/characters/fireman_left_2.bmp", "Resources/characters/fireman_left_3.bmp", "Resources/characters/fireman_left_4.bmp",
+										"Resources/characters/fireman_left_5.bmp", "Resources/characters/fireman_right_1.bmp", "Resources/characters/fireman_right_2.bmp",
+										"Resources/characters/fireman_right_3.bmp", "Resources/characters/fireman_right_4.bmp", "Resources/characters/fireman_right_5.bmp" }, RGB(0, 255, 0));
 	fireman.character.SetTopLeft(38, 877);
-	watergirl.character.LoadBitmapByString({ "Resources/characters/watergirl_front_1.bmp" }, RGB(0, 255, 0));
+
+	watergirl.character.LoadBitmapByString({ "Resources/characters/watergirl_front_1.bmp", "Resources/characters/watergirl_front_2.bmp", "Resources/characters/watergirl_front_3.bmp",
+											"Resources/characters/watergirl_front_4.bmp", "Resources/characters/watergirl_front_5.bmp", "Resources/characters/watergirl_left_1.bmp",
+											"Resources/characters/watergirl_left_2.bmp", "Resources/characters/watergirl_left_3.bmp", "Resources/characters/watergirl_left_4.bmp",
+											"Resources/characters/watergirl_left_5.bmp", "Resources/characters/watergirl_right_1.bmp", "Resources/characters/watergirl_right_2.bmp",
+											"Resources/characters/watergirl_right_3.bmp", "Resources/characters/watergirl_right_4.bmp", "Resources/characters/watergirl_right_5.bmp" }, RGB(0, 255, 0));
 	watergirl.character.SetTopLeft(38, 737);
 
 	map.generateMap();
@@ -283,6 +292,8 @@ void CGameStateRun::OnShow()
 		mapPool.showObject(page_phase - 5);
 		mapFan.showObject(page_phase - 5);
 
+		fireman.SetFrame();
+		watergirl.SetFrame();
 		fireman.character.ShowBitmap();		//(38, 877)
 		watergirl.character.ShowBitmap();	//(38, 737)
 	}

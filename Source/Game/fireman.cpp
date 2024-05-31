@@ -64,7 +64,12 @@ bool Fireman::IsTimesUp() {
 bool Fireman::isBumpHead(Map &map, Object::MapPole &pole, int page) {
 	int current_X = this->character.GetLeft();
 	int current_Y = this->character.GetTop();
+	// 向上
 	bool check_1 = map.getPlaceName((current_X + 27) / 35, current_Y / 35, page) == "Resources/block/block_1.bmp";
+	// 向左
+	bool check_3 = map.getPlaceName(current_X / 35, current_Y / 35 + 1, page) == "Resources/block/block_1.bmp";
+	// 向右
+	bool check_4 = map.getPlaceName((current_X + this->character.GetWidth())/ 35 , current_Y / 35 + 1, page) == "Resources/block/block_1.bmp";
 	bool check_2 = false;
 	if (page == 1){
 		for (int i = 0; i < 2; i++){
@@ -90,7 +95,7 @@ bool Fireman::isBumpHead(Map &map, Object::MapPole &pole, int page) {
 		}
 	}
 		
-	if (check_1 || check_2){
+	if (check_1 || check_2 || check_3 || check_4){
 		this->IsUpButtonClick = false;
 		return false;
 	}
@@ -182,4 +187,17 @@ void Fireman::resetMap(int map_stage) {
 		this->character.SetTopLeft(38, 877);
 	if (map_stage == 5) // levle 5
 		this->character.SetTopLeft(38, 877);
+}
+
+void Fireman::SetFrame() {
+	if (this->IsLeftButtonClick) {
+		this->character.SetFrameIndexOfBitmap(this->frame % 5 + 5);
+	}
+	else if (this->IsRightButtonClick) {
+		this->character.SetFrameIndexOfBitmap(this->frame % 5 + 10);
+	}
+	else {
+		this->character.SetFrameIndexOfBitmap(this->frame % 5);
+	}
+	this->frame += 1;
 }
