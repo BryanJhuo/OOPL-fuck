@@ -1,19 +1,32 @@
 # ObjectOrientedProgrammingLab
-## 更新日誌
-2024/03/04 initial project & add part of image  
-2024/03/14 add "Right/Left move and initial Jump move"   
-2024/03/15 add "class of Fireman, Watergirl and Character"  
-2024/03/17 add "use text file to generate map"  
-2024/04/30 finish level One
+## 遊玩使用手冊
+### 角色控制
+- 小火人  
+向上: 方向鍵&uarr; 向左: 方向鍵&larr; 向右: 方向鍵&rarr; 
+- 小水人  
+向上: E 鍵 向左: S 鍵 向右: F 鍵  
+### Debug 特殊模式
+- 啟動無敵模式  
+按下 **I鍵**
+- 關閉人物動畫  
+按下 **O鍵**
+> 開啟人物動畫，可能會造成在關卡某些地方，會不好操作，建議操作不好的人不要嘗試
+### 一些小提醒
+- Visual Studio 版本  
+我們開發是使用 Visual Studio 2022版，所以如果使用其他版本，需修改專案的設定  
+- 控制桿的判定  
+人物可以從上方跳過去，並不會觸發，而如需觸發，要直接完全地走過去控制桿
+- 控制桿對升降梯  
+升降梯在移動時，人物不可離開控制桿，直到移動完畢 (雖然大部分的移動時間都不會太長)  
 
 ## Resources
-原網頁版本 
+- 原網頁版本  
 url : https://i-gamer.net/site/16086.html
 
-Virtual Key Code
+- Virtual Key Code  
 url : https://learn.microsoft.com/zh-tw/windows/win32/inputdev/virtual-key-codes
 
-Library
+- Library  
 url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework  
 
 ## 每周進度
@@ -25,16 +38,16 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 |Week5    |主畫面製作| &#10004; |人物移動-重力| &#10004; |
 |Week6    |關卡選擇畫面製作| &#10004; |關卡地圖製作-判定| &#10004; |
 |Week7    |死亡視窗| &#10004; |關卡機關製作-冰/火門| &#10004; |
-|Week8    |過關視窗| [ ] |關卡機關製作-鑽石| &#10004; |
+|Week8    |過關視窗| &#10004; |關卡機關製作-鑽石| &#10004; |
 |Week9    |暫停畫面| &#10004; |關卡機關製作-水/火/綠池| &#10004; |
 |Week10   |各畫面連接|  &#10004;  |關卡機關製作-移動桿按鈕| &#10004; |
 |Week11   |關卡地圖製作2|  &#10004;  |關卡機關製作-風扇| &#10004; |
-|Week12   |關卡地圖製作3|  &#10004;  |關卡機關製作-方塊| [ ] |
-|Week13   |關卡地圖製作4|  &#10004;  |關卡機關與地圖整合| [ ] |
-|Week14   |Demo| [ ] |Demo| [ ] |
-|Week15   |Demo| [ ] |Demo| [ ] |
-|Week16   |Demo| [ ] |Demo| [ ] |
-|Week17   |報告製作| [ ] |報告製作| [ ] |
+|Week12   |關卡地圖製作3|  &#10004;  |關卡機關製作-方塊| &#10004; |
+|Week13   |關卡地圖製作4|  &#10004;  |關卡機關與地圖整合| &#10004; |
+|Week14   |Demo| &#10004; |Demo| &#10004; |
+|Week15   |Demo| &#10004; |Demo| &#10004; |
+|Week16   |Demo| &#10004; |Demo| &#10004; |
+|Week17   |報告製作| &#10004; |報告製作| &#10004; |
 
 ## 各個關卡待修的小Bug
 ### 所有關卡共通 Bug [&#10004;]  
@@ -49,8 +62,7 @@ url : https://ntut-xuan.github.io/LeistungsstarkesGameFramework
 ### 第二關 [&#10004;]
 - [X] 水池的素材圖片需要修改，會穿牆判斷
 
-### 第三關 [ ]  
-> 此關卡快要接近報廢中
+### 第三關 [&#10004;]  
 - [X] 按鈕還未啟動
 - [X] 角色不應該穿越升降梯(都好了)
 - [X] 左右升降梯在移動時，人物重疊應會一起被推走

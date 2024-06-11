@@ -122,6 +122,7 @@ namespace game_framework {
 		bool musicPlay = true;
 		bool effectPlay = true;
 		int invincible = 0; // 無敵
+		int animation = 0; // 角色動畫
 		Fireman fireman;
 		Watergirl watergirl;
 		Map map;

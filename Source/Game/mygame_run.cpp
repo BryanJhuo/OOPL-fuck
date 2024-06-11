@@ -102,23 +102,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	fireman.IsButtonDown(nChar);
 	watergirl.IsButtonDown(nChar);
 
-	//test for passWindow
-	const int VK_P = 0x50;
-	if (nChar == VK_P) {
-		page_phase = 5;
-		scene.showScene(page_phase);
-	}
-	//test for dieWindow
-	const int VK_O = 0x4F;
-	if (nChar == VK_O) {
-		page_phase = 4;
-		scene.showScene(page_phase);
-	}
 	// 按下I，啟動無敵
 	const int VK_I = 0x49;
-	if (nChar == VK_I) {
+	if (nChar == VK_I) 
 		this->invincible += 1;
-	}
+	// 按下O，關閉人物動畫
+	const int VK_O = 0x4F;
+	if (nChar == VK_O)
+		this->animation += 1;
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -292,8 +283,10 @@ void CGameStateRun::OnShow()
 		mapPool.showObject(page_phase - 5);
 		mapFan.showObject(page_phase - 5);
 
-		fireman.SetFrame();
-		watergirl.SetFrame();
+		if (this->animation % 2 == 0){
+			fireman.SetFrame();
+			watergirl.SetFrame();
+		}
 		fireman.character.ShowBitmap();		//(38, 877)
 		watergirl.character.ShowBitmap();	//(38, 737)
 	}
@@ -308,6 +301,12 @@ void CGameStateRun::OnShow()
 	if (this->invincible % 2 == 1) {
 		CDC* pdc = CDDraw::GetBackCDC();
 		CTextDraw::Print(pdc, 630, 10, "開啟無敵模式");
+		CDDraw::ReleaseBackCDC();
+	}
+
+	if (this->animation % 2 == 1) {
+		CDC* pdc = CDDraw::GetBackCDC();
+		CTextDraw::Print(pdc, 630, 30, "關閉人物動畫");
 		CDDraw::ReleaseBackCDC();
 	}
 
@@ -706,7 +705,7 @@ void CGameStateRun::movingPole(int page, int index, CMovingBitmap &character) {
 					this->mapPole.mapPole[8].SetTopLeft(this->mapPole.mapPole[8].GetLeft() + 3, this->mapPole.mapPole[8].GetTop());
 			}
 			else if (this->ctrlMode[index] == 1) { // opening
-				if (this->mapPole.mapPole[8].GetLeft() > 1155)
+				if (this->mapPole.mapPole[8].GetLeft() > 1085)
 					this->mapPole.mapPole[8].SetTopLeft(this->mapPole.mapPole[8].GetLeft() - 3, this->mapPole.mapPole[8].GetTop());
 			}
 			else {
@@ -945,6 +944,11 @@ void CGameStateRun::isDiamondOverlap(int page) {
 	for (int i = 0; i < 11; i++) {
 		if (CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDiamond.blueDiamond[i]))
 			this->mapDiamond.blueState[i] = false;
+	}
+	if (page == 5) {
+		if (CMovingBitmap::IsOverlap(this->fireman.character, this->mapDiamond.whiteDiamond) 
+			|| CMovingBitmap::IsOverlap(this->watergirl.character, this->mapDiamond.whiteDiamond))
+			this->mapDiamond.whiteState = false;
 	}
 }
 

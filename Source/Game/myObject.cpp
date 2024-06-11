@@ -178,6 +178,7 @@ void Object::MapDiamond::generateObject() {
     }
     whiteDiamond.LoadBitmapByString({ "Resources/object/diamond_white.bmp", "Resources/object/diamond_white0.bmp" }, RGB(0, 255, 0));
     whiteDiamond.SetTopLeft(0, 0);
+    whiteState = true;
 }
 
 void Object::MapDiamond::showObject(int map_stage) {
@@ -288,7 +289,7 @@ void Object::MapDiamond::showObject(int map_stage) {
 
     case 5: {
         whiteDiamond.SetTopLeft(50, 190);
-        whiteDiamond.ShowBitmap();
+        if (whiteState) whiteDiamond.ShowBitmap();
     }
 
     }
@@ -298,6 +299,7 @@ void Object::MapDiamond::resetMap(int map_stage) {
     for (int i = 0; i < 11; i++) {
         this->redState[i] = true;
         this->blueState[i] = true;
+        this->whiteState = true;
     }
 }
 
