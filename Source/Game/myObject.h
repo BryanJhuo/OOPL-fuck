@@ -56,6 +56,7 @@ namespace Object {
 
         bool redState[11];
         bool blueState[11];
+        bool whiteState;
         void generateObject();
         void showObject(int map_stage);
         void resetMap(int map_stage);
