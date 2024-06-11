@@ -449,15 +449,15 @@ void Object::MapPole::resetMap(int map_stage) {
         mapPole[1].SetTopLeft(1225, 385);
     }
     if (map_stage == 3) {
-        mapPole[1].SetTopLeft(105, 560);
-        mapPole[8].SetTopLeft(560, 420);
+        mapPole[1].SetTopLeft(105, 563);
+        mapPole[8].SetTopLeft(560, 423);
         mapPole[4].SetTopLeft(670, 455);
         mapPole[6].SetTopLeft(665, 595);
         mapPole[7].SetTopLeft(530, 877);
         mapPole[11].SetTopLeft(665, 877);
         mapPole[10].SetTopLeft(700, 140);
-        mapPole[2].SetTopLeft(1155, 280);
-        mapPole[3].SetTopLeft(1155, 700);
+        mapPole[2].SetTopLeft(1155, 283);
+        mapPole[3].SetTopLeft(1155, 703);
     }
     if (map_stage == 5) {
         mapPole[4].SetTopLeft(598, 35);
